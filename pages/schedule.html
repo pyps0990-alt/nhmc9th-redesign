@@ -9,99 +9,53 @@
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <!-- FullCalendar -->
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.css" rel="stylesheet">
+  <!-- FullCalendar CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <style>
     /* FullCalendar 深色主題覆寫 */
     .fc {
       --fc-border-color: #374151;
-      --fc-button-bg-color: #166534;
-      --fc-button-border-color: #166534;
-      --fc-button-hover-bg-color: #15803d;
-      --fc-button-hover-border-color: #15803d;
-      --fc-button-active-bg-color: #14532d;
+      --fc-button-bg-color: var(--color-secondary);
+      --fc-button-border-color: var(--color-secondary);
+      --fc-button-hover-bg-color: #334155;
+      --fc-button-hover-border-color: #334155;
+      --fc-button-active-bg-color: #1e293b;
       --fc-today-bg-color: rgba(250, 204, 21, 0.1);
-      --fc-page-bg-color: #1f2937;
-      --fc-neutral-bg-color: #111827;
-      color: #f3f4f6;
-      font-family: 'Noto Sans TC', sans-serif;
+      --fc-page-bg-color: var(--color-card-bg);
+      --fc-neutral-bg-color: var(--color-background);
+      color: var(--color-text-light);
+      font-family: var(--font-body);
       font-size: 0.875rem;
     }
-    .fc .fc-toolbar-title { font-family: 'Oswald', sans-serif; font-size: 1.25rem; color: #facc15; }
-    .fc .fc-col-header-cell { background-color: #111827; }
-    .fc .fc-col-header-cell-cushion { color: #9ca3af; font-weight: 600; }
-    .fc .fc-daygrid-day-number { color: #d1d5db; }
-    .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number { color: #facc15; font-weight: 700; }
+    .fc .fc-toolbar-title { font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-primary); }
+    .fc .fc-col-header-cell { background-color: var(--color-background); }
+    .fc .fc-col-header-cell-cushion { color: var(--color-text-muted); font-weight: 600; }
+    .fc .fc-daygrid-day-number { color: var(--color-text-light); }
+    .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number { color: var(--color-primary); font-weight: 700; }
     .fc .fc-event { border-radius: 4px; font-size: 0.75rem; }
-    .fc .fc-button { font-family: 'Oswald', sans-serif; letter-spacing: 0.025em; }
+    .fc .fc-button { font-family: var(--font-heading); letter-spacing: 0.025em; }
   </style>
 </head>
 <body>
   <div id="site-header"></div>
 
-  <!-- 頁面標題 -->
-  <section class="bg-green-950 py-10 px-4 text-center" data-aos="fade-up">
-    <h1 class="text-3xl md:text-4xl font-bold text-yellow-300 mb-1" style="font-family:'Oswald',sans-serif;">活動排程</h1>
-    <p class="text-gray-400 text-sm">查看社團活動日曆，掌握每次社課時間</p>
+  <!-- ========== 頁面標題區 ========== -->
+  <section class="hero-section py-16 px-4 text-center" data-aos="fade-up">
+    <div class="hero-bg" style="background-image: url(\'../assets/images/IMG_1645.jpg\');"></div>
+    <div class="relative z-10">
+      <h1 class="text-4xl md:text-5xl font-bold text-yellow-300 mb-2" style="font-family:\'Oswald\',sans-serif;">活動排程</h1>
+      <p class="text-gray-400 text-sm uppercase tracking-widest">NHMC Schedule</p>
+    </div>
   </section>
 
-  <main class="max-w-5xl mx-auto px-4 py-10 space-y-8">
+  <!-- ========== 主內容 ========== -->
+  <main class="max-w-5xl mx-auto px-4 py-12 space-y-12">
 
-    <!-- 活動日曆 -->
     <section data-aos="fade-up">
-      <h2 class="section-title">🗓️ 活動日曆</h2>
+      <h2 class="section-title">📅 社團活動日曆</h2>
       <div class="card p-4 md:p-6">
         <div id="calendar"></div>
-      </div>
-    </section>
-
-    <!-- 活動細節 -->
-    <section id="eventDetailSection" class="hidden" data-aos="fade-up">
-      <h2 class="section-title">📌 活動細節</h2>
-      <div class="card p-6 border-l-4 border-yellow-400">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <div class="form-label">活動名稱</div>
-            <div id="eventTitle" class="text-white font-semibold">—</div>
-          </div>
-          <div>
-            <div class="form-label">活動日期</div>
-            <div id="eventDate" class="text-white">—</div>
-          </div>
-          <div>
-            <div class="form-label">活動說明</div>
-            <div id="eventDesc" class="text-gray-300 text-sm">—</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 活動調查表單 -->
-    <section data-aos="fade-up">
-      <h2 class="section-title">📋 活動調查表單</h2>
-      <div class="card overflow-hidden">
-        <iframe
-          src="https://forms.gle/tRXqttBhpaNNvqSH9"
-          width="100%" height="600"
-          frameborder="0" marginheight="0" marginwidth="0"
-          title="活動調查表單">
-          載入中…
-        </iframe>
-      </div>
-    </section>
-
-    <!-- 地社人員表單 -->
-    <section data-aos="fade-up">
-      <h2 class="section-title">📋 地社人員表單</h2>
-      <div class="card overflow-hidden">
-        <iframe
-          src="https://docs.google.com/forms/d/e/1FAIpQLScxOVpt96iVnZCPQjl4apjMYGvGOXAU02U5I_W9I0AD7yS6hA/viewform"
-          width="100%" height="600"
-          frameborder="0" marginheight="0" marginwidth="0"
-          title="地社人員表單">
-          載入中…
-        </iframe>
       </div>
     </section>
 
@@ -116,69 +70,90 @@
   <script src="../js/firebase-config.js"></script>
   <script src="../js/components.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+  <!-- FullCalendar JS -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/locales/zh-tw.global.min.js"></script>
 
   <script>
-    renderHeader('活動排程');
+    renderHeader("活動排程");
     renderFooter();
     initPageTransition();
     AOS.init({ duration: 600, once: true, offset: 80 });
-    window.addEventListener('load', () => document.body.classList.add('loaded'));
+    window.addEventListener("load", () => document.body.classList.add("loaded"));
 
-    // FullCalendar 初始化
-    document.addEventListener('DOMContentLoaded', () => {
-      const calendarEl = document.getElementById('calendar');
-      const detailSection = document.getElementById('eventDetailSection');
-      const titleEl = document.getElementById('eventTitle');
-      const dateEl = document.getElementById('eventDate');
-      const descEl = document.getElementById('eventDesc');
-
+    document.addEventListener("DOMContentLoaded", function() {
+      const calendarEl = document.getElementById("calendar");
       const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'zh-tw',
+        initialView: "dayGridMonth",
+        locale: "zh-tw",
         headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,listMonth'
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek,timeGridDay"
         },
-        buttonText: { today: '今天', month: '月', list: '清單' },
-        events: (fetchInfo, successCallback, failureCallback) => {
-          db.ref('events').once('value').then(snapshot => {
-            const data = snapshot.val() || {};
-            const events = Object.entries(data).map(([id, event]) => ({
-              id,
-              title: event.title,
-              start: event.date,
-              description: event.description || '',
-              backgroundColor: '#166534',
-              borderColor: '#facc15',
-              textColor: '#fde047'
-            }));
-            successCallback(events);
-          }).catch(failureCallback);
+        buttonText: {
+          today: "今天",
+          month: "月",
+          week: "週",
+          day: "日"
         },
-        eventClick: (info) => {
-          info.jsEvent.preventDefault();
-          titleEl.textContent = info.event.title;
-          dateEl.textContent = info.event.start.toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
-          descEl.textContent = info.event.extendedProps.description || '無說明';
-          detailSection.classList.remove('hidden');
-          detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        events: [], // 將從 Firebase 載入事件
+        eventClick: function(info) {
+          // 點擊事件時的處理
+          window.showToast("活動: " + info.event.title + "\n時間: " + info.event.start.toLocaleString(), true);
+        },
+        eventDidMount: function(info) {
+          // 自定義事件渲染，例如添加 Tailwind CSS 類別
+          info.el.classList.add("rounded-md", "px-2", "py-1", "text-xs", "font-medium", "shadow-sm");
+          if (info.event.extendedProps.type === "社課") {
+            info.el.classList.add("bg-yellow-600", "text-white");
+          } else if (info.event.extendedProps.type === "活動") {
+            info.el.classList.add("bg-blue-600", "text-white");
+          } else {
+            info.el.classList.add("bg-gray-600", "text-white");
+          }
         }
       });
+
+      // 從 Firebase 載入活動
+      const eventsRef = db.ref("events");
+      eventsRef.on("value", snapshot => {
+        const firebaseEvents = snapshot.val();
+        const calendarEvents = [];
+        for (let id in firebaseEvents) {
+          const event = firebaseEvents[id];
+          calendarEvents.push({
+            id: id,
+            title: event.title,
+            start: event.start,
+            end: event.end || event.start, // 如果沒有結束時間，則結束時間等於開始時間
+            extendedProps: {
+              type: event.type || "活動"
+            }
+          });
+        }
+        calendar.removeAllEvents();
+        calendar.addEventSource(calendarEvents);
+      });
+
       calendar.render();
 
-      // 從 URL 參數自動展開事件
-      const params = new URLSearchParams(window.location.search);
-      const eventId = params.get('eventId');
+      // 處理從首頁公告點擊過來的事件
+      const urlParams = new URLSearchParams(window.location.search);
+      const eventId = urlParams.get("eventId");
       if (eventId) {
-        db.ref(`events/${eventId}`).once('value').then(snap => {
-          const ev = snap.val();
-          if (ev) {
-            titleEl.textContent = ev.title;
-            dateEl.textContent = new Date(ev.date).toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
-            descEl.textContent = ev.description || '無說明';
-            detailSection.classList.remove('hidden');
+        db.ref(`announcements/${eventId}`).once("value", snapshot => {
+          const announcement = snapshot.val();
+          if (announcement && announcement.linkedEventId) {
+            const linkedEventId = announcement.linkedEventId;
+            db.ref(`events/${linkedEventId}`).once("value", eventSnapshot => {
+              const event = eventSnapshot.val();
+              if (event) {
+                // 導航到事件日期並顯示事件詳情
+                calendar.gotoDate(event.start);
+                window.showToast("相關活動: " + event.title + "\n時間: " + new Date(event.start).toLocaleString(), true);
+              }
+            });
           }
         });
       }

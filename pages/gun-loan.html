@@ -15,17 +15,13 @@
   <div id="site-header"></div>
 
   <!-- 頁面標題 -->
-  <section class="hero-section py-16 px-4 text-center" data-aos="fade-up">
-    <div class="hero-bg" style="background-image: url('../assets/images/IMG_1645.jpg');"></div>
+<section class="hero-section py-16 px-4 text-center" data-aos="fade-up">
+    <div class="hero-bg" style="background-image: url(\'../assets/images/IMG_1645.jpg\');"></div>
     <div class="relative z-10">
-      <h1 class="text-3xl md:text-5xl font-bold text-yellow-300 mb-3" style="font-family:'Oswald',sans-serif;">
-        槍枝借用系統
-      </h1>
-      <p class="text-gray-300 text-sm md:text-base max-w-xl mx-auto">
-        精確掌控學校借用之槍械數量
-      </p>
-      <div class="mt-4 inline-block bg-red-900 border border-red-700 rounded-lg px-4 py-2">
-        <p class="text-red-300 text-xs md:text-sm">
+      <h1 class="text-4xl md:text-5xl font-bold text-yellow-300 mb-2" style="font-family:\'Oswald\',sans-serif;">槍枝借用</h1>
+      <p class="text-gray-400 text-sm uppercase tracking-widest">Weapon Loan System</p>
+      <div class="mt-4 inline-block bg-red-700 border border-red-600 rounded-lg px-4 py-2">
+        <p class="text-red-200 text-xs md:text-sm">
           ⚠️ 如有槍枝遺失或人為損壞，全部由借用者負責賠償
         </p>
       </div>
@@ -96,9 +92,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
         <!-- 新增槍枝 -->
-        <div class="card p-6">
-          <h3 class="text-yellow-300 font-bold text-base mb-4" style="font-family:'Oswald',sans-serif;">➕ 新增槍枝</h3>
-          <div class="space-y-3">
+        <div class="card p-6">          <h3 class="text-primary font-bold text-base mb-4" style="font-family:\'Oswald\',sans-serif;">➕ 新增槍枝</h3>          <div class="space-y-3">
             <div>
               <label class="form-label">槍枝 ID</label>
               <input id="newGunId" type="text" class="form-input" placeholder="例：G004">
@@ -117,16 +111,15 @@
 
         <!-- 刪除槍枝 -->
         <div class="card p-6">
-          <h3 class="text-yellow-300 font-bold text-base mb-4" style="font-family:'Oswald',sans-serif;">🗑️ 刪除槍枝</h3>
-          <div class="space-y-3">
+          <h3 class="text-primary font-bold text-base mb-4" style="font-family:\'Oswald\',sans-serif;">🗑️ 刪除槍枝</h3>         <div class="space-y-3">
             <div>
               <label class="form-label">槍枝 ID</label>
               <input id="deleteGunId" type="text" class="form-input" placeholder="輸入要刪除的槍枝 ID">
             </div>
             <button onclick="deleteGun()" class="btn btn-danger w-full">刪除</button>
           </div>
-          <div class="mt-4 p-3 bg-red-950 border border-red-800 rounded-lg">
-            <p class="text-red-300 text-xs">⚠️ 刪除後無法復原，請謹慎操作</p>
+          <div class="mt-4 p-3 bg-red-700 border border-red-600 rounded-lg">
+            <p class="text-red-200 text-xs">⚠️ 刪除後無法復原，請謹慎操作</p>
           </div>
         </div>
 
@@ -159,15 +152,7 @@
 
     const gunsRef = db.ref('guns');
 
-    // Toast 通知
-    function showToast(msg, success = true) {
-      const toast = document.getElementById('toast');
-      toast.textContent = msg;
-      toast.className = `fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-lg text-sm font-semibold shadow-xl transition-all duration-300 ${success ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`;
-      toast.style.opacity = '1';
-      toast.style.pointerEvents = 'auto';
-      setTimeout(() => { toast.style.opacity = '0'; toast.style.pointerEvents = 'none'; }, 3000);
-    }
+
 
     // 初始化預設槍枝資料
     function initGuns() {
