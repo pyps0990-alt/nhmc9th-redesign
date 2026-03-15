@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="內湖高中軍武社 - 幹部後台">
+  <title>幹部後台 | 內湖高中軍武社</title>
+
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .tab-btn.active {
+      background-color: #facc15;
+      color: #000;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <!-- 頁面標題 -->
+  <section class="bg-green-950 py-8 px-4" data-aos="fade-up">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-bold text-yellow-300" style="font-family:'Oswald',sans-serif;">🛡️ 幹部後台</h1>
+        <p class="text-gray-400 text-sm mt-1">登入帳號：<span id="adminEmail" class="text-green-300">載入中...</span></p>
+      </div>
+      <button id="logoutBtn" class="btn btn-danger">🚪 登出</button>
+    </div>
+  </section>
+
+  <!-- Tab 導覽 -->
+  <div class="bg-gray-900 border-b border-gray-800 sticky top-[60px] z-40">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex overflow-x-auto gap-1 py-2 scrollbar-hide">
+        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-3 py-2 shrink-0 rounded-md active" data-target="announceModule">📣 公告管理</button>
+        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-3 py-2 shrink-0 rounded-md" data-target="eventModule">📅 活動管理</button>
+        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-3 py-2 shrink-0 rounded-md" data-target="dailyModule">📝 單日簽到</button>
+        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-3 py-2 shrink-0 rounded-md" data-target="summaryModule">📊 出席總覽</button>
+        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-3 py-2 shrink-0 rounded-md" data-target="studentModule">👨‍🎓 學生管理</button>
+        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-3 py-2 shrink-0 rounded-md" data-target="financeModule">💰 財務管理</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+
+    <!-- ===== 公告管理 ===== -->
+    <section id="announceModule" class="tab-content active space-y-6">
+      <h2 class="section-title">📣 公告管理</h2>
+
+      <!-- 新增公告 -->
+      <div class="card p-6">
+        <h3 class="text-yellow-300 font-bold mb-4" style="font-family:'Oswald',sans-serif;">➕ 新增公告</h3>
+        <div class="space-y-3">
+          <div>
+            <label class="form-label">公告內容 <span class="text-red-400">*</span></label>
+            <textarea id="announceText" rows="3" class="form-input resize-none" placeholder="輸入公告內容..."></textarea>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label class="form-label">關聯活動 ID（選填）</label>
+              <input id="announceEventId" type="text" class="form-input" placeholder="活動 ID（可留空）">
+            </div>
+            <div>
+              <label class="form-label">失效日期（選填）</label>
+              <input id="announceExpiry" type="date" class="form-input">
+            </div>
+          </div>
+          <button onclick="addAnnouncement()" class="btn btn-primary">發布公告</button>
+        </div>
+      </div>
+
+      <!-- 公告列表 -->
+      <div class="card p-6">
+        <h3 class="text-yellow-300 font-bold mb-4" style="font-family:'Oswald',sans-serif;">📋 現有公告</h3>
+        <div id="announceList" class="space-y-2">
+          <div class="text-gray-500 text-sm py-4 text-center">載入中...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 活動管理 ===== -->
+    <section id="eventModule" class="tab-content space-y-6">
+      <h2 class="section-title">📅 活動管理</h2>
+
+      <!-- 新增活動 -->
+      <div class="card p-6">
+        <h3 class="text-yellow-300 font-bold mb-4" style="font-family:'Oswald',sans-serif;">➕ 新增活動</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div>
+            <label class="form-label">活動名稱 <span class="text-red-400">*</span></label>
+            <input id="eventTitle" type="text" class="form-input" placeholder="活動名稱">
+          </div>
+          <div>
+            <label class="form-label">活動日期 <span class="text-red-400">*</span></label>
+            <input id="eventDate" type="date" class="form-input">
+          </div>
+          <div class="md:col-span-2">
+            <label class="form-label">活動說明</label>
+            <textarea id="eventDesc" rows="2" class="form-input resize-none" placeholder="活動說明（選填）"></textarea>
+          </div>
+        </div>
+        <button onclick="addEvent()" class="btn btn-primary mt-4">新增活動</button>
+      </div>
+
+      <!-- 活動列表 -->
+      <div class="card overflow-hidden">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>活動名稱</th>
+              <th>日期</th>
+              <th>說明</th>
+              <th class="text-center">操作</th>
+            </tr>
+          </thead>
+          <tbody id="eventList">
+            <tr><td colspan="4" class="text-center text-gray-500 py-6">載入中...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== 單日簽到管理 ===== -->
+    <section id="dailyModule" class="tab-content space-y-6">
+      <h2 class="section-title">📝 單日簽到管理</h2>
+      <div class="card p-5">
+        <div class="flex flex-wrap items-end gap-3 mb-4">
+          <div>
+            <label class="form-label">選擇日期</label>
+            <input type="date" id="datePicker" class="form-input">
+          </div>
+          <button id="loadRecordsBtn" class="btn btn-secondary">載入紀錄</button>
+          <button id="exportBtn" class="btn btn-ghost">匯出 Excel</button>
+          <button id="fillAbsentBtn" class="btn btn-danger">一鍵補全缺席</button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="data-table" id="recordsTable">
+            <thead>
+              <tr>
+                <th>班級座號</th>
+                <th>姓名</th>
+                <th>狀態</th>
+                <th>原因</th>
+                <th>時間</th>
+                <th class="text-center">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="6" class="text-center text-gray-500 py-6">請選擇日期後載入紀錄</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 出席總覽 ===== -->
+    <section id="summaryModule" class="tab-content space-y-6">
+      <h2 class="section-title">📊 出席總覽</h2>
+      <div class="card p-5">
+        <div class="flex flex-wrap items-end gap-3 mb-4">
+          <div>
+            <label class="form-label">開始日期</label>
+            <input type="date" id="startDate" class="form-input">
+          </div>
+          <div>
+            <label class="form-label">結束日期</label>
+            <input type="date" id="endDate" class="form-input">
+          </div>
+          <button id="loadSummaryBtn" class="btn btn-secondary">載入總覽</button>
+          <button id="exportSummaryBtn" class="btn btn-ghost">匯出 Excel</button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="data-table" id="summaryTable">
+            <thead>
+              <tr>
+                <th>班級座號</th>
+                <th>姓名</th>
+                <th>缺席原因</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="3" class="text-center text-gray-500 py-6">請選擇日期範圍後載入</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 學生管理 ===== -->
+    <section id="studentModule" class="tab-content space-y-6">
+      <h2 class="section-title">👨‍🎓 學生名單管理</h2>
+      <div class="card p-6">
+        <h3 class="text-yellow-300 font-bold mb-4" style="font-family:'Oswald',sans-serif;">➕ 新增學生</h3>
+        <form id="studentForm" class="flex flex-wrap gap-3">
+          <div class="flex-1 min-w-[140px]">
+            <label class="form-label">班級座號 <span class="text-red-400">*</span></label>
+            <input type="text" id="studentIdInput" placeholder="例：201-15" required class="form-input">
+          </div>
+          <div class="flex-1 min-w-[140px]">
+            <label class="form-label">姓名 <span class="text-red-400">*</span></label>
+            <input type="text" id="studentNameInput" placeholder="輸入姓名" required class="form-input">
+          </div>
+          <div class="flex items-end">
+            <button type="submit" class="btn btn-primary">新增</button>
+          </div>
+        </form>
+      </div>
+      <div class="card overflow-hidden">
+        <table class="data-table" id="studentTable">
+          <thead>
+            <tr>
+              <th>班級座號</th>
+              <th>姓名</th>
+              <th class="text-center">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="3" class="text-center text-gray-500 py-6">載入中...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== 財務管理 ===== -->
+    <section id="financeModule" class="tab-content space-y-6">
+      <h2 class="section-title">💰 財務管理</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <!-- 新增收入 -->
+        <div class="card p-6">
+          <h3 class="text-green-300 font-bold mb-4" style="font-family:'Oswald',sans-serif;">📥 新增收入</h3>
+          <div class="space-y-3">
+            <div>
+              <label class="form-label">項目名稱</label>
+              <input id="incomeItem" type="text" class="form-input" placeholder="例：社費收入">
+            </div>
+            <div>
+              <label class="form-label">金額（NT$）</label>
+              <input id="incomeAmount" type="number" class="form-input" placeholder="0">
+            </div>
+            <button onclick="addFinance('income')" class="btn btn-secondary w-full">新增收入</button>
+          </div>
+        </div>
+
+        <!-- 新增支出 -->
+        <div class="card p-6">
+          <h3 class="text-red-300 font-bold mb-4" style="font-family:'Oswald',sans-serif;">📤 新增支出</h3>
+          <div class="space-y-3">
+            <div>
+              <label class="form-label">項目名稱</label>
+              <input id="expenseItem" type="text" class="form-input" placeholder="例：器材採購">
+            </div>
+            <div>
+              <label class="form-label">金額（NT$）</label>
+              <input id="expenseAmount" type="number" class="form-input" placeholder="0">
+            </div>
+            <button onclick="addFinance('expense')" class="btn btn-danger w-full">新增支出</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-lg text-sm font-semibold shadow-xl transition-all duration-300 opacity-0 pointer-events-none"></div>
+
+  <div id="site-footer"></div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <!-- SheetJS for Excel export -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <script>
+    renderHeader('');
+    renderFooter();
+    AOS.init({ duration: 600, once: true });
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+
+    // Toast
+    function showToast(msg, success = true) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.className = `fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-lg text-sm font-semibold shadow-xl transition-all duration-300 ${success ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`;
+      toast.style.opacity = '1';
+      toast.style.pointerEvents = 'auto';
+      setTimeout(() => { toast.style.opacity = '0'; toast.style.pointerEvents = 'none'; }, 3000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 登入保護
+      auth.onAuthStateChanged(user => {
+        if (!user) {
+          window.location.href = '../login.html';
+        } else {
+          document.getElementById('adminEmail').textContent = user.email;
+        }
+      });
+
+      // 登出
+      document.getElementById('logoutBtn').addEventListener('click', () => auth.signOut());
+
+      // Tab 切換
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById(btn.dataset.target).classList.add('active');
+        });
+      });
+
+      // ===== 公告管理 =====
+      const announceRef = db.ref('announcements');
+      const announceList = document.getElementById('announceList');
+
+      window.addAnnouncement = function() {
+        const text = document.getElementById('announceText').value.trim();
+        const eventId = document.getElementById('announceEventId').value.trim();
+        const expiry = document.getElementById('announceExpiry').value;
+        if (!text) { showToast('請輸入公告內容', false); return; }
+        const data = { text, timestamp: Date.now() };
+        if (eventId) data.eventId = eventId;
+        if (expiry) data.expiresAt = new Date(expiry).getTime();
+        announceRef.push(data).then(() => {
+          showToast('✅ 公告發布成功！');
+          document.getElementById('announceText').value = '';
+          document.getElementById('announceEventId').value = '';
+          document.getElementById('announceExpiry').value = '';
+        });
+      };
+
+      announceRef.on('value', snapshot => {
+        const data = snapshot.val() || {};
+        const now = Date.now();
+        announceList.innerHTML = '';
+        const entries = Object.entries(data).sort((a, b) => (b[1].timestamp || 0) - (a[1].timestamp || 0));
+        if (entries.length === 0) {
+          announceList.innerHTML = '<div class="text-gray-500 text-sm py-4 text-center">尚無公告</div>';
+          return;
+        }
+        entries.forEach(([key, item]) => {
+          const isExpired = item.expiresAt && item.expiresAt < now;
+          const div = document.createElement('div');
+          div.className = `flex items-start justify-between gap-3 p-3 rounded-lg ${isExpired ? 'bg-gray-900 opacity-60' : 'bg-gray-800'}`;
+          div.innerHTML = `
+            <div class="flex-1">
+              <p class="text-sm ${isExpired ? 'line-through text-gray-500' : 'text-gray-200'}">${item.text}</p>
+              <p class="text-xs text-gray-500 mt-1">
+                ${new Date(item.timestamp).toLocaleDateString('zh-TW')}
+                ${item.expiresAt ? '· 失效：' + new Date(item.expiresAt).toLocaleDateString('zh-TW') : ''}
+              </p>
+            </div>
+            <button onclick="deleteAnnouncement('${key}')" class="btn btn-danger text-xs px-2 py-1 shrink-0">刪除</button>
+          `;
+          announceList.appendChild(div);
+        });
+      });
+
+      window.deleteAnnouncement = function(key) {
+        if (!confirm('確定刪除此公告？')) return;
+        announceRef.child(key).remove().then(() => showToast('✅ 公告已刪除'));
+      };
+
+      // ===== 活動管理 =====
+      const eventsRef = db.ref('events');
+      const eventList = document.getElementById('eventList');
+
+      window.addEvent = function() {
+        const title = document.getElementById('eventTitle').value.trim();
+        const date = document.getElementById('eventDate').value;
+        const desc = document.getElementById('eventDesc').value.trim();
+        if (!title || !date) { showToast('請填寫活動名稱和日期', false); return; }
+        eventsRef.push({ title, date, description: desc, createdAt: Date.now() }).then(() => {
+          showToast('✅ 活動新增成功！');
+          document.getElementById('eventTitle').value = '';
+          document.getElementById('eventDate').value = '';
+          document.getElementById('eventDesc').value = '';
+        });
+      };
+
+      eventsRef.on('value', snapshot => {
+        const data = snapshot.val() || {};
+        const entries = Object.entries(data).sort((a, b) => a[1].date > b[1].date ? 1 : -1);
+        eventList.innerHTML = '';
+        if (entries.length === 0) {
+          eventList.innerHTML = '<tr><td colspan="4" class="text-center text-gray-500 py-6">尚無活動</td></tr>';
+          return;
+        }
+        entries.forEach(([key, ev]) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="font-medium">${ev.title}</td>
+            <td>${ev.date}</td>
+            <td class="text-gray-400 text-sm">${ev.description || '—'}</td>
+            <td class="text-center">
+              <button onclick="deleteEvent('${key}')" class="btn btn-danger text-xs px-2 py-1">刪除</button>
+            </td>
+          `;
+          eventList.appendChild(tr);
+        });
+      });
+
+      window.deleteEvent = function(key) {
+        if (!confirm('確定刪除此活動？')) return;
+        eventsRef.child(key).remove().then(() => showToast('✅ 活動已刪除'));
+      };
+
+      // ===== 學生管理 =====
+      const studentsRef = db.ref('students');
+      const studentTable = document.getElementById('studentTable').querySelector('tbody');
+
+      document.getElementById('studentForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const id = document.getElementById('studentIdInput').value.trim();
+        const name = document.getElementById('studentNameInput').value.trim();
+        if (id && name) {
+          studentsRef.child(id).set({ name }).then(() => {
+            showToast(`✅ 學生 ${name} 新增成功！`);
+            document.getElementById('studentForm').reset();
+          });
+        }
+      });
+
+      studentsRef.on('value', snapshot => {
+        const data = snapshot.val() || {};
+        studentTable.innerHTML = '';
+        const entries = Object.entries(data).sort((a, b) => a[0].localeCompare(b[0]));
+        if (entries.length === 0) {
+          studentTable.innerHTML = '<tr><td colspan="3" class="text-center text-gray-500 py-6">尚無學生資料</td></tr>';
+          return;
+        }
+        entries.forEach(([id, info]) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="font-mono text-sm">${id}</td>
+            <td class="font-medium">${info.name}</td>
+            <td class="text-center">
+              <button onclick="deleteStudent('${id}')" class="btn btn-danger text-xs px-2 py-1">刪除</button>
+            </td>
+          `;
+          studentTable.appendChild(tr);
+        });
+      });
+
+      window.deleteStudent = function(id) {
+        if (!confirm(`確定刪除學生 ${id}？`)) return;
+        studentsRef.child(id).remove().then(() => showToast('✅ 學生已刪除'));
+      };
+
+      // ===== 單日簽到管理 =====
+      const checkinRef = db.ref('signedList');
+      const recordsTableBody = document.getElementById('recordsTable').querySelector('tbody');
+
+      document.getElementById('loadRecordsBtn').addEventListener('click', async () => {
+        const dateStr = document.getElementById('datePicker').value;
+        if (!dateStr) { showToast('請選擇日期', false); return; }
+        await loadDailyRecords(dateStr);
+      });
+
+      async function loadDailyRecords(dateStr) {
+        const studentsSnap = await studentsRef.get();
+        const students = studentsSnap.val() || {};
+        const checkSnap = await checkinRef.child(dateStr).get();
+        const records = checkSnap.val() || {};
+
+        recordsTableBody.innerHTML = '';
+        Object.entries(students).forEach(([id, info]) => {
+          const rec = records[id] || { status: '未簽到', reason: '', time: '' };
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="font-mono text-sm">${id}</td>
+            <td class="font-medium">${info.name}</td>
+            <td>
+              <select class="form-input status py-1 text-xs">
+                <option value="出席" ${rec.status === '出席' ? 'selected' : ''}>出席</option>
+                <option value="缺席" ${rec.status === '缺席' ? 'selected' : ''}>缺席</option>
+                <option value="未簽到" ${rec.status === '未簽到' ? 'selected' : ''}>未簽到</option>
+              </select>
+            </td>
+            <td><input type="text" class="form-input reason py-1 text-xs" value="${rec.reason || ''}"></td>
+            <td><input type="time" class="form-input time py-1 text-xs" value="${rec.time || ''}"></td>
+            <td class="text-center">
+              <button class="btn btn-danger text-xs px-2 py-1 delete-btn">刪除</button>
+            </td>
+          `;
+          recordsTableBody.appendChild(tr);
+
+          tr.querySelector('.delete-btn').addEventListener('click', () => {
+            checkinRef.child(dateStr).child(id).remove();
+            tr.remove();
+          });
+          tr.querySelector('.status').addEventListener('change', e => {
+            checkinRef.child(dateStr).child(id).update({ status: e.target.value });
+          });
+          tr.querySelector('.reason').addEventListener('change', e => {
+            checkinRef.child(dateStr).child(id).update({ reason: e.target.value });
+          });
+          tr.querySelector('.time').addEventListener('change', e => {
+            checkinRef.child(dateStr).child(id).update({ time: e.target.value });
+          });
+        });
+        showToast(`✅ 已載入 ${dateStr} 的紀錄`);
+      }
+
+      document.getElementById('fillAbsentBtn').addEventListener('click', () => {
+        const dateStr = document.getElementById('datePicker').value;
+        if (!dateStr) { showToast('請選擇日期', false); return; }
+        recordsTableBody.querySelectorAll('tr').forEach(row => {
+          const statusSelect = row.querySelector('.status');
+          if (statusSelect && statusSelect.value === '未簽到') {
+            statusSelect.value = '缺席';
+            const id = row.cells[0].textContent;
+            checkinRef.child(dateStr).child(id).update({ status: '缺席' });
+          }
+        });
+        showToast('✅ 已補全缺席紀錄');
+      });
+
+      document.getElementById('exportBtn').addEventListener('click', () => {
+        const dateStr = document.getElementById('datePicker').value;
+        if (!dateStr) { showToast('請選擇日期', false); return; }
+        const wb = XLSX.utils.book_new();
+        const data = [['班級座號', '姓名', '狀態', '原因', '時間']];
+        recordsTableBody.querySelectorAll('tr').forEach(row => {
+          data.push([
+            row.cells[0].textContent,
+            row.cells[1].textContent,
+            row.querySelector('.status')?.value || '',
+            row.querySelector('.reason')?.value || '',
+            row.querySelector('.time')?.value || ''
+          ]);
+        });
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        XLSX.utils.book_append_sheet(wb, ws, '簽到');
+        XLSX.writeFile(wb, `簽到-${dateStr}.xlsx`);
+      });
+
+      // ===== 出席總覽 =====
+      const summaryTableBody = document.getElementById('summaryTable').querySelector('tbody');
+
+      document.getElementById('loadSummaryBtn').addEventListener('click', async () => {
+        const sDate = document.getElementById('startDate').value;
+        const eDate = document.getElementById('endDate').value;
+        if (!sDate || !eDate) { showToast('請選擇日期範圍', false); return; }
+
+        const studentsSnap = await studentsRef.get();
+        const students = studentsSnap.val() || {};
+        const recordsSnap = await checkinRef.get();
+        const allRecords = recordsSnap.val() || {};
+
+        summaryTableBody.innerHTML = '';
+        Object.entries(students).forEach(([id, info]) => {
+          const reasons = [];
+          for (const [date, recs] of Object.entries(allRecords)) {
+            if (date >= sDate && date <= eDate && recs[id] && recs[id].status === '缺席') {
+              reasons.push(recs[id].reason || '無說明');
+            }
+          }
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="font-mono text-sm">${id}</td>
+            <td class="font-medium">${info.name}</td>
+            <td class="text-gray-400 text-sm">${reasons.join('、') || '—'}</td>
+          `;
+          summaryTableBody.appendChild(tr);
+        });
+        showToast('✅ 總覽載入完成');
+      });
+
+      document.getElementById('exportSummaryBtn').addEventListener('click', () => {
+        const sDate = document.getElementById('startDate').value;
+        const eDate = document.getElementById('endDate').value;
+        if (!sDate || !eDate) { showToast('請選擇日期範圍', false); return; }
+        const wb = XLSX.utils.book_new();
+        const data = [['班級座號', '姓名', '缺席原因']];
+        summaryTableBody.querySelectorAll('tr').forEach(row => {
+          data.push([row.cells[0].textContent, row.cells[1].textContent, row.cells[2].textContent]);
+        });
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        XLSX.utils.book_append_sheet(wb, ws, '總覽');
+        XLSX.writeFile(wb, `出席總覽-${sDate}-${eDate}.xlsx`);
+      });
+
+      // ===== 財務管理 =====
+      window.addFinance = function(type) {
+        const item = document.getElementById(`${type}Item`).value.trim();
+        const amount = document.getElementById(`${type}Amount`).value;
+        if (!item || !amount) { showToast('請填寫項目名稱和金額', false); return; }
+        db.ref(`finance/record/${type}`).push({ item, amount: Number(amount) }).then(() => {
+          showToast(`✅ ${type === 'income' ? '收入' : '支出'}新增成功！`);
+          document.getElementById(`${type}Item`).value = '';
+          document.getElementById(`${type}Amount`).value = '';
+        });
+      };
+
+    }); // DOMContentLoaded
+  </script>
+</body>
+</html>

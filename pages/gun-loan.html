@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="內湖高中軍武社 - 槍枝借用系統">
+  <title>槍枝借用 | 內湖高中軍武社</title>
+
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <!-- 頁面標題 -->
+  <section class="hero-section py-16 px-4 text-center" data-aos="fade-up">
+    <div class="hero-bg" style="background-image: url('../assets/images/IMG_1645.jpg');"></div>
+    <div class="relative z-10">
+      <h1 class="text-3xl md:text-5xl font-bold text-yellow-300 mb-3" style="font-family:'Oswald',sans-serif;">
+        槍枝借用系統
+      </h1>
+      <p class="text-gray-300 text-sm md:text-base max-w-xl mx-auto">
+        精確掌控學校借用之槍械數量
+      </p>
+      <div class="mt-4 inline-block bg-red-900 border border-red-700 rounded-lg px-4 py-2">
+        <p class="text-red-300 text-xs md:text-sm">
+          ⚠️ 如有槍枝遺失或人為損壞，全部由借用者負責賠償
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <main class="max-w-5xl mx-auto px-4 py-10 space-y-8">
+
+    <!-- 槍枝庫存總覽 -->
+    <section data-aos="fade-up">
+      <h2 class="section-title">🔫 槍枝庫存</h2>
+      <div class="card overflow-hidden">
+        <div id="gunListContainer" class="divide-y divide-gray-700">
+          <div class="p-6 text-center text-gray-500">載入中...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 借用表單 -->
+    <section data-aos="fade-up">
+      <h2 class="section-title">📥 借用槍枝</h2>
+      <div class="card p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="form-label" for="gunId">選擇槍枝 <span class="text-red-400">*</span></label>
+            <select id="gunId" class="form-input">
+              <option value="">選擇可借用槍枝</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label" for="classInfo">班級 <span class="text-red-400">*</span></label>
+            <input id="classInfo" type="text" class="form-input" placeholder="例：201">
+          </div>
+          <div>
+            <label class="form-label" for="seatNumber">座號 <span class="text-red-400">*</span></label>
+            <input id="seatNumber" type="text" class="form-input" placeholder="例：15">
+          </div>
+          <div>
+            <label class="form-label" for="studentName">姓名 <span class="text-red-400">*</span></label>
+            <input id="studentName" type="text" class="form-input" placeholder="輸入借用者姓名">
+          </div>
+        </div>
+        <button onclick="borrowGun()" class="btn btn-primary w-full mt-5 py-3 text-base">
+          📥 確認借出
+        </button>
+      </div>
+    </section>
+
+    <!-- 歸還表單 -->
+    <section data-aos="fade-up">
+      <h2 class="section-title">📤 歸還槍枝</h2>
+      <div class="card p-6">
+        <div>
+          <label class="form-label" for="returnGunId">選擇已借出槍枝 <span class="text-red-400">*</span></label>
+          <select id="returnGunId" class="form-input mb-4">
+            <option value="">選擇已借出槍枝</option>
+          </select>
+        </div>
+        <button onclick="returnGun()" class="btn btn-danger w-full py-3 text-base">
+          📤 確認歸還
+        </button>
+      </div>
+    </section>
+
+    <!-- 幹部管理（登入後顯示） -->
+    <section id="adminSection" class="hidden" data-aos="fade-up">
+      <h2 class="section-title">🛡️ 幹部管理</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <!-- 新增槍枝 -->
+        <div class="card p-6">
+          <h3 class="text-yellow-300 font-bold text-base mb-4" style="font-family:'Oswald',sans-serif;">➕ 新增槍枝</h3>
+          <div class="space-y-3">
+            <div>
+              <label class="form-label">槍枝 ID</label>
+              <input id="newGunId" type="text" class="form-input" placeholder="例：G004">
+            </div>
+            <div>
+              <label class="form-label">槍枝名稱</label>
+              <input id="newGunName" type="text" class="form-input" placeholder="例：M4A1">
+            </div>
+            <div>
+              <label class="form-label">槍枝類型</label>
+              <input id="newGunType" type="text" class="form-input" placeholder="例：步槍">
+            </div>
+            <button onclick="addGun()" class="btn btn-secondary w-full">新增</button>
+          </div>
+        </div>
+
+        <!-- 刪除槍枝 -->
+        <div class="card p-6">
+          <h3 class="text-yellow-300 font-bold text-base mb-4" style="font-family:'Oswald',sans-serif;">🗑️ 刪除槍枝</h3>
+          <div class="space-y-3">
+            <div>
+              <label class="form-label">槍枝 ID</label>
+              <input id="deleteGunId" type="text" class="form-input" placeholder="輸入要刪除的槍枝 ID">
+            </div>
+            <button onclick="deleteGun()" class="btn btn-danger w-full">刪除</button>
+          </div>
+          <div class="mt-4 p-3 bg-red-950 border border-red-800 rounded-lg">
+            <p class="text-red-300 text-xs">⚠️ 刪除後無法復原，請謹慎操作</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast 通知 -->
+  <div id="toast"
+       class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-lg text-sm font-semibold shadow-xl transition-all duration-300 opacity-0 pointer-events-none">
+  </div>
+
+  <div id="site-footer"></div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    renderHeader('槍枝借用');
+    renderFooter();
+    initPageTransition();
+    AOS.init({ duration: 600, once: true, offset: 80 });
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+
+    const gunsRef = db.ref('guns');
+
+    // Toast 通知
+    function showToast(msg, success = true) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.className = `fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-lg text-sm font-semibold shadow-xl transition-all duration-300 ${success ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`;
+      toast.style.opacity = '1';
+      toast.style.pointerEvents = 'auto';
+      setTimeout(() => { toast.style.opacity = '0'; toast.style.pointerEvents = 'none'; }, 3000);
+    }
+
+    // 初始化預設槍枝資料
+    function initGuns() {
+      gunsRef.once('value', snapshot => {
+        if (!snapshot.exists()) {
+          gunsRef.set({
+            G001: { name: 'M16A2', type: '步槍', isBorrowed: false, borrower: '' },
+            G002: { name: 'M9', type: '手槍', isBorrowed: false, borrower: '' },
+            G003: { name: 'AK47', type: '步槍', isBorrowed: false, borrower: '' }
+          });
+        }
+      });
+    }
+    initGuns();
+
+    // 監聽槍枝資料
+    gunsRef.on('value', snapshot => {
+      const data = snapshot.val() || {};
+      const borrowSelect = document.getElementById('gunId');
+      const returnSelect = document.getElementById('returnGunId');
+      const container = document.getElementById('gunListContainer');
+
+      borrowSelect.innerHTML = '<option value="">選擇可借用槍枝</option>';
+      returnSelect.innerHTML = '<option value="">選擇已借出槍枝</option>';
+      container.innerHTML = '';
+
+      const guns = Object.entries(data);
+      if (guns.length === 0) {
+        container.innerHTML = '<div class="p-6 text-center text-gray-500">目前尚無槍枝資料</div>';
+        return;
+      }
+
+      guns.forEach(([id, gun]) => {
+        // 更新選單
+        if (!gun.isBorrowed) {
+          borrowSelect.innerHTML += `<option value="${id}">${id} - ${gun.name}（${gun.type}）</option>`;
+        } else {
+          returnSelect.innerHTML += `<option value="${id}">${id} - ${gun.name}（借用者：${gun.borrower}）</option>`;
+        }
+
+        // 庫存列表
+        const div = document.createElement('div');
+        div.className = 'flex items-center justify-between px-5 py-4 hover:bg-gray-750 transition-colors';
+        div.innerHTML = `
+          <div class="flex items-center gap-4">
+            <div class="text-2xl">${gun.type === '手槍' ? '🔫' : '🪖'}</div>
+            <div>
+              <div class="font-semibold text-white">${gun.name}</div>
+              <div class="text-xs text-gray-500">${id} · ${gun.type}</div>
+            </div>
+          </div>
+          <div class="text-right">
+            ${gun.isBorrowed
+              ? `<span class="badge badge-danger">已借出</span>
+                 <div class="text-xs text-gray-400 mt-1">${gun.borrower}</div>`
+              : `<span class="badge badge-success">可借用</span>`
+            }
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    });
+
+    // 借出功能
+    function borrowGun() {
+      const gunId = document.getElementById('gunId').value.trim();
+      const classInfo = document.getElementById('classInfo').value.trim();
+      const seatNumber = document.getElementById('seatNumber').value.trim();
+      const studentName = document.getElementById('studentName').value.trim();
+
+      if (!gunId || !classInfo || !seatNumber || !studentName) {
+        showToast('請完整填寫所有欄位', false);
+        return;
+      }
+
+      const borrowerInfo = `${classInfo}班 ${seatNumber}號 ${studentName}`;
+      const gunRef = gunsRef.child(gunId);
+
+      gunRef.once('value', snapshot => {
+        if (!snapshot.exists()) { showToast('找不到此槍枝', false); return; }
+        if (snapshot.val().isBorrowed) { showToast('此槍枝已被借出', false); return; }
+
+        gunRef.update({ isBorrowed: true, borrower: borrowerInfo }, err => {
+          if (err) { showToast('借出失敗：' + err.message, false); return; }
+          showToast(`✅ ${snapshot.val().name} 借出成功！`);
+          document.getElementById('gunId').value = '';
+          document.getElementById('classInfo').value = '';
+          document.getElementById('seatNumber').value = '';
+          document.getElementById('studentName').value = '';
+        });
+      });
+    }
+
+    // 歸還功能
+    function returnGun() {
+      const gunId = document.getElementById('returnGunId').value.trim();
+      if (!gunId) { showToast('請選擇要歸還的槍枝', false); return; }
+
+      const gunRef = gunsRef.child(gunId);
+      gunRef.once('value', snapshot => {
+        if (!snapshot.exists()) { showToast('找不到此槍枝', false); return; }
+        if (!snapshot.val().isBorrowed) { showToast('此槍枝未被借出', false); return; }
+
+        gunRef.update({ isBorrowed: false, borrower: '' }, err => {
+          if (err) { showToast('歸還失敗：' + err.message, false); return; }
+          showToast(`✅ ${snapshot.val().name} 歸還成功！`);
+          document.getElementById('returnGunId').value = '';
+        });
+      });
+    }
+
+    // 新增槍枝（幹部）
+    function addGun() {
+      const id = document.getElementById('newGunId').value.trim();
+      const name = document.getElementById('newGunName').value.trim();
+      const type = document.getElementById('newGunType').value.trim();
+      if (!id || !name || !type) { showToast('請完整填寫所有欄位', false); return; }
+
+      gunsRef.child(id).once('value', snapshot => {
+        if (snapshot.exists()) { showToast('槍枝 ID 已存在', false); return; }
+        gunsRef.child(id).set({ name, type, isBorrowed: false, borrower: '' }, err => {
+          if (err) { showToast('新增失敗：' + err.message, false); return; }
+          showToast(`✅ ${name} 新增成功！`);
+          document.getElementById('newGunId').value = '';
+          document.getElementById('newGunName').value = '';
+          document.getElementById('newGunType').value = '';
+        });
+      });
+    }
+
+    // 刪除槍枝（幹部）
+    function deleteGun() {
+      const id = document.getElementById('deleteGunId').value.trim();
+      if (!id) { showToast('請輸入槍枝 ID', false); return; }
+      if (!confirm(`確定要刪除槍枝 ${id}？此操作無法復原。`)) return;
+
+      gunsRef.child(id).once('value', snapshot => {
+        if (!snapshot.exists()) { showToast('找不到此槍枝', false); return; }
+        gunsRef.child(id).remove(err => {
+          if (err) { showToast('刪除失敗：' + err.message, false); return; }
+          showToast(`✅ 槍枝 ${id} 已刪除`);
+          document.getElementById('deleteGunId').value = '';
+        });
+      });
+    }
+
+    // 幹部登入狀態控制管理面板
+    auth.onAuthStateChanged(user => {
+      const adminSection = document.getElementById('adminSection');
+      if (user) adminSection.classList.remove('hidden');
+      else adminSection.classList.add('hidden');
+    });
+  </script>
+</body>
+</html>

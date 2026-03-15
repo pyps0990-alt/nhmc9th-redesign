@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="內湖高中軍武社 - 教室地圖">
+  <title>教室地圖 | 內湖高中軍武社</title>
+
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <!-- 頁面標題 -->
+  <section class="bg-green-950 py-10 px-4 text-center" data-aos="fade-up">
+    <h1 class="text-3xl md:text-4xl font-bold text-yellow-300 mb-1" style="font-family:'Oswald',sans-serif;">教室地圖</h1>
+    <p class="text-gray-400 text-sm">快速查看社團教室位置與集合地點</p>
+  </section>
+
+  <main class="max-w-5xl mx-auto px-4 py-10 space-y-8">
+
+    <!-- 地圖圖片 -->
+    <section data-aos="zoom-in">
+      <h2 class="section-title">🗺️ 校園地圖導覽</h2>
+      <div class="card overflow-hidden">
+        <img src="../assets/images/classroom.png"
+             alt="內湖高中教室地圖"
+             class="w-full h-auto"
+             onerror="this.parentElement.innerHTML='<div class=\'p-10 text-center text-gray-500\'>地圖圖片載入失敗</div>'">
+      </div>
+    </section>
+
+    <!-- 地點說明 -->
+    <section data-aos="fade-up">
+      <h2 class="section-title">📍 重要地點</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <div class="card p-6 bg-green-900 border-l-4 border-yellow-400">
+          <div class="flex items-start gap-4">
+            <div class="text-3xl shrink-0">🏫</div>
+            <div>
+              <h3 class="text-yellow-300 font-bold text-lg mb-1" style="font-family:'Oswald',sans-serif;">主要社課教室</h3>
+              <p class="text-gray-300 text-sm leading-relaxed">
+                <strong class="text-white">C棟 5樓 205 教室</strong><br>
+                靠近旋轉樓梯口，每週社課在此進行。
+              </p>
+              <div class="mt-3 flex items-center gap-2">
+                <span class="badge badge-success">每週社課</span>
+                <span class="badge badge-info">C棟</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-6 bg-gray-800 border-l-4 border-gray-500">
+          <div class="flex items-start gap-4">
+            <div class="text-3xl shrink-0">🔧</div>
+            <div>
+              <h3 class="text-yellow-300 font-bold text-lg mb-1" style="font-family:'Oswald',sans-serif;">器材室 &amp; 靶場</h3>
+              <p class="text-gray-300 text-sm leading-relaxed">
+                <strong class="text-white">A棟地下室</strong><br>
+                由A棟樓梯下去，請幹部及社員注意安全與器材管理。
+              </p>
+              <div class="mt-3 flex items-center gap-2">
+                <span class="badge badge-warning">需幹部陪同</span>
+                <span class="badge badge-info">A棟</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-6 bg-gray-800 border-l-4 border-gray-500">
+          <div class="flex items-start gap-4">
+            <div class="text-3xl shrink-0">🚪</div>
+            <div>
+              <h3 class="text-yellow-300 font-bold text-lg mb-1" style="font-family:'Oswald',sans-serif;">集合地點</h3>
+              <p class="text-gray-300 text-sm leading-relaxed">
+                社課開始前請於 <strong class="text-white">C棟 5樓走廊</strong> 集合，
+                等待幹部點名後統一進入教室。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-6 bg-gray-800 border-l-4 border-gray-500">
+          <div class="flex items-start gap-4">
+            <div class="text-3xl shrink-0">⚠️</div>
+            <div>
+              <h3 class="text-yellow-300 font-bold text-lg mb-1" style="font-family:'Oswald',sans-serif;">注意事項</h3>
+              <ul class="text-gray-300 text-sm space-y-1 leading-relaxed">
+                <li>• 器材室需由幹部帶領進入</li>
+                <li>• 槍枝借用需填寫借用紀錄</li>
+                <li>• 離開前確認器材歸位</li>
+                <li>• 禁止攜帶器材離開校園</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 樓層示意 -->
+    <section data-aos="fade-up">
+      <h2 class="section-title">🏢 樓層分布</h2>
+      <div class="card overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>樓層</th>
+                <th>棟別</th>
+                <th>用途</th>
+                <th>備註</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge badge-warning">5F</span></td>
+                <td>C棟</td>
+                <td class="font-medium">社課教室（205）</td>
+                <td class="text-gray-400 text-sm">每週社課場地</td>
+              </tr>
+              <tr>
+                <td><span class="badge badge-info">B1</span></td>
+                <td>A棟</td>
+                <td class="font-medium">器材室 &amp; 靶場</td>
+                <td class="text-gray-400 text-sm">需幹部陪同</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    renderHeader('教室地圖');
+    renderFooter();
+    initPageTransition();
+    AOS.init({ duration: 600, once: true, offset: 80 });
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+  </script>
+</body>
+</html>

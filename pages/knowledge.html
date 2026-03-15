@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="內湖高中軍武社 - 知識分享">
+  <title>知識分享 | 內湖高中軍武社</title>
+
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <!-- SimpleMDE Markdown 編輯器 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplemde@1.11.2/dist/simplemde.min.css">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    /* SimpleMDE 深色主題適配 */
+    .CodeMirror { background: #1f2937 !important; color: #f3f4f6 !important; border-color: #374151 !important; }
+    .editor-toolbar { background: #111827 !important; border-color: #374151 !important; }
+    .editor-toolbar a { color: #9ca3af !important; }
+    .editor-toolbar a:hover, .editor-toolbar a.active { color: #facc15 !important; background: #1f2937 !important; }
+    .editor-preview { background: #1f2937 !important; color: #f3f4f6 !important; }
+    .editor-preview h1, .editor-preview h2, .editor-preview h3 { color: #facc15; }
+    .editor-preview a { color: #60a5fa; }
+    .editor-preview code { background: #111827; color: #86efac; }
+    .CodeMirror-cursor { border-left-color: #facc15 !important; }
+
+    /* 文章卡片 Markdown 渲染 */
+    .article-content h1, .article-content h2, .article-content h3 { color: #facc15; font-family: 'Oswald', sans-serif; margin: 0.75rem 0 0.5rem; }
+    .article-content p { color: #d1d5db; margin: 0.5rem 0; line-height: 1.7; }
+    .article-content ul, .article-content ol { color: #d1d5db; padding-left: 1.5rem; margin: 0.5rem 0; }
+    .article-content code { background: #111827; color: #86efac; padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.875em; }
+    .article-content pre { background: #111827; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; }
+    .article-content blockquote { border-left: 3px solid #facc15; padding-left: 1rem; color: #9ca3af; font-style: italic; }
+    .article-content a { color: #60a5fa; text-decoration: underline; }
+    .article-content strong { color: #f9fafb; }
+  </style>
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <!-- 頁面標題 -->
+  <section class="bg-green-950 py-10 px-4 text-center" data-aos="fade-up">
+    <h1 class="text-3xl md:text-4xl font-bold text-yellow-300 mb-1" style="font-family:'Oswald',sans-serif;">知識分享</h1>
+    <p class="text-gray-400 text-sm">軍事知識、技巧分享，持續精進社員能力</p>
+  </section>
+
+  <main class="max-w-5xl mx-auto px-4 py-10 space-y-10">
+
+    <!-- 撰寫文章（登入後顯示） -->
+    <section id="editorSection" class="hidden" data-aos="fade-up">
+      <h2 class="section-title">✏️ 撰寫新文章</h2>
+      <div class="card p-6">
+        <div class="mb-4">
+          <label class="form-label" for="articleTitle">文章標題 <span class="text-red-400">*</span></label>
+          <input id="articleTitle" type="text" class="form-input" placeholder="輸入文章標題...">
+        </div>
+        <div class="mb-4">
+          <label class="form-label">文章內容（支援 Markdown 語法）</label>
+          <textarea id="editor"></textarea>
+        </div>
+        <div class="flex gap-3">
+          <button onclick="saveArticle()" class="btn btn-primary">
+            💾 發布文章
+          </button>
+          <button onclick="clearEditor()" class="btn btn-ghost">
+            🗑️ 清除
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 文章列表 -->
+    <section data-aos="fade-up">
+      <h2 class="section-title">📚 知識文章</h2>
+
+      <!-- 分類篩選 -->
+      <div class="flex flex-wrap gap-2 mb-6" id="categoryFilter">
+        <button class="btn btn-primary text-xs px-3 py-1.5 category-btn active" data-cat="all">全部</button>
+        <button class="btn btn-ghost text-xs px-3 py-1.5 category-btn" data-cat="weapon">武器知識</button>
+        <button class="btn btn-ghost text-xs px-3 py-1.5 category-btn" data-cat="tactics">戰術技巧</button>
+        <button class="btn btn-ghost text-xs px-3 py-1.5 category-btn" data-cat="history">軍事歷史</button>
+        <button class="btn btn-ghost text-xs px-3 py-1.5 category-btn" data-cat="other">其他</button>
+      </div>
+
+      <div id="articleList" class="space-y-4">
+        <div class="text-center text-gray-500 py-10">載入中...</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 文章詳情 Modal -->
+  <div id="articleModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black bg-opacity-70">
+    <div class="bg-gray-800 rounded-xl max-w-3xl w-full max-h-[85vh] overflow-y-auto shadow-2xl">
+      <div class="p-6">
+        <div class="flex items-start justify-between mb-4">
+          <h3 id="modalTitle" class="text-xl font-bold text-yellow-300" style="font-family:'Oswald',sans-serif;"></h3>
+          <button onclick="closeModal()" class="text-gray-400 hover:text-white text-2xl leading-none ml-4">×</button>
+        </div>
+        <div class="text-xs text-gray-500 mb-4" id="modalMeta"></div>
+        <div id="modalContent" class="article-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="site-footer"></div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/simplemde@1.11.2/dist/simplemde.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <script>
+    renderHeader('知識分享');
+    renderFooter();
+    initPageTransition();
+    AOS.init({ duration: 600, once: true, offset: 80 });
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+
+    // SimpleMDE 初始化
+    let simplemde;
+    const editorSection = document.getElementById('editorSection');
+
+    // 登入狀態控制編輯器顯示
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        editorSection.classList.remove('hidden');
+        if (!simplemde) {
+          simplemde = new SimpleMDE({
+            element: document.getElementById('editor'),
+            placeholder: '使用 Markdown 語法撰寫文章...\n\n# 標題\n## 子標題\n**粗體** *斜體*\n- 列表項目',
+            spellChecker: false,
+            autosave: { enabled: true, uniqueId: 'nhmc-knowledge-draft' }
+          });
+        }
+      } else {
+        editorSection.classList.add('hidden');
+      }
+    });
+
+    // 儲存文章到 Firebase
+    function saveArticle() {
+      const title = document.getElementById('articleTitle').value.trim();
+      const content = simplemde ? simplemde.value().trim() : '';
+      if (!title) { alert('請輸入文章標題'); return; }
+      if (!content) { alert('請輸入文章內容'); return; }
+
+      const article = {
+        title,
+        content,
+        author: auth.currentUser?.email?.split('@')[0] || '幹部',
+        timestamp: Date.now(),
+        category: 'other'
+      };
+
+      db.ref('knowledge').push(article).then(() => {
+        alert('✅ 文章發布成功！');
+        document.getElementById('articleTitle').value = '';
+        if (simplemde) simplemde.value('');
+      }).catch(err => alert('發布失敗：' + err.message));
+    }
+
+    function clearEditor() {
+      if (confirm('確定要清除編輯內容？')) {
+        document.getElementById('articleTitle').value = '';
+        if (simplemde) simplemde.value('');
+      }
+    }
+
+    // 載入文章列表
+    const articleList = document.getElementById('articleList');
+    let allArticles = [];
+
+    db.ref('knowledge').on('value', snapshot => {
+      const data = snapshot.val() || {};
+      allArticles = Object.entries(data)
+        .map(([id, a]) => ({ id, ...a }))
+        .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+      renderArticles(allArticles);
+    });
+
+    function renderArticles(articles) {
+      if (articles.length === 0) {
+        articleList.innerHTML = '<div class="text-center text-gray-500 py-10">尚無文章，登入後可發布第一篇！</div>';
+        return;
+      }
+      articleList.innerHTML = articles.map(a => {
+        const date = a.timestamp ? new Date(a.timestamp).toLocaleDateString('zh-TW') : '';
+        // 取前 100 字預覽
+        const preview = a.content ? a.content.replace(/[#*`\[\]]/g, '').substring(0, 100) + '...' : '';
+        return `
+          <div class="card p-5 cursor-pointer hover:border-yellow-400 border border-transparent transition-colors"
+               onclick="openArticle('${a.id}')">
+            <div class="flex items-start justify-between gap-3">
+              <h3 class="text-yellow-300 font-bold text-lg" style="font-family:'Oswald',sans-serif;">${a.title}</h3>
+              <span class="badge badge-info shrink-0 text-xs">${a.category || 'other'}</span>
+            </div>
+            <p class="text-gray-400 text-sm mt-2 leading-relaxed">${preview}</p>
+            <div class="flex items-center gap-4 mt-3 text-xs text-gray-500">
+              <span>✍️ ${a.author || '幹部'}</span>
+              <span>📅 ${date}</span>
+              <span class="ml-auto text-yellow-400 hover:text-yellow-300">閱讀全文 →</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 分類篩選
+    document.querySelectorAll('.category-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.category-btn').forEach(b => {
+          b.classList.remove('btn-primary');
+          b.classList.add('btn-ghost');
+        });
+        btn.classList.remove('btn-ghost');
+        btn.classList.add('btn-primary');
+        const cat = btn.dataset.cat;
+        renderArticles(cat === 'all' ? allArticles : allArticles.filter(a => a.category === cat));
+      });
+    });
+
+    // 開啟文章 Modal
+    function openArticle(id) {
+      const article = allArticles.find(a => a.id === id);
+      if (!article) return;
+      document.getElementById('modalTitle').textContent = article.title;
+      document.getElementById('modalMeta').textContent =
+        `✍️ ${article.author || '幹部'}　📅 ${article.timestamp ? new Date(article.timestamp).toLocaleDateString('zh-TW') : ''}`;
+      document.getElementById('modalContent').innerHTML = marked.parse(article.content || '');
+      document.getElementById('articleModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('articleModal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    // 點擊 Modal 外部關閉
+    document.getElementById('articleModal').addEventListener('click', e => {
+      if (e.target === document.getElementById('articleModal')) closeModal();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="內湖高中軍武社 - 活動排程">
+  <title>活動排程 | 內湖高中軍武社</title>
+
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <!-- FullCalendar -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    /* FullCalendar 深色主題覆寫 */
+    .fc {
+      --fc-border-color: #374151;
+      --fc-button-bg-color: #166534;
+      --fc-button-border-color: #166534;
+      --fc-button-hover-bg-color: #15803d;
+      --fc-button-hover-border-color: #15803d;
+      --fc-button-active-bg-color: #14532d;
+      --fc-today-bg-color: rgba(250, 204, 21, 0.1);
+      --fc-page-bg-color: #1f2937;
+      --fc-neutral-bg-color: #111827;
+      color: #f3f4f6;
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 0.875rem;
+    }
+    .fc .fc-toolbar-title { font-family: 'Oswald', sans-serif; font-size: 1.25rem; color: #facc15; }
+    .fc .fc-col-header-cell { background-color: #111827; }
+    .fc .fc-col-header-cell-cushion { color: #9ca3af; font-weight: 600; }
+    .fc .fc-daygrid-day-number { color: #d1d5db; }
+    .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number { color: #facc15; font-weight: 700; }
+    .fc .fc-event { border-radius: 4px; font-size: 0.75rem; }
+    .fc .fc-button { font-family: 'Oswald', sans-serif; letter-spacing: 0.025em; }
+  </style>
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <!-- 頁面標題 -->
+  <section class="bg-green-950 py-10 px-4 text-center" data-aos="fade-up">
+    <h1 class="text-3xl md:text-4xl font-bold text-yellow-300 mb-1" style="font-family:'Oswald',sans-serif;">活動排程</h1>
+    <p class="text-gray-400 text-sm">查看社團活動日曆，掌握每次社課時間</p>
+  </section>
+
+  <main class="max-w-5xl mx-auto px-4 py-10 space-y-8">
+
+    <!-- 活動日曆 -->
+    <section data-aos="fade-up">
+      <h2 class="section-title">🗓️ 活動日曆</h2>
+      <div class="card p-4 md:p-6">
+        <div id="calendar"></div>
+      </div>
+    </section>
+
+    <!-- 活動細節 -->
+    <section id="eventDetailSection" class="hidden" data-aos="fade-up">
+      <h2 class="section-title">📌 活動細節</h2>
+      <div class="card p-6 border-l-4 border-yellow-400">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <div class="form-label">活動名稱</div>
+            <div id="eventTitle" class="text-white font-semibold">—</div>
+          </div>
+          <div>
+            <div class="form-label">活動日期</div>
+            <div id="eventDate" class="text-white">—</div>
+          </div>
+          <div>
+            <div class="form-label">活動說明</div>
+            <div id="eventDesc" class="text-gray-300 text-sm">—</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 活動調查表單 -->
+    <section data-aos="fade-up">
+      <h2 class="section-title">📋 活動調查表單</h2>
+      <div class="card overflow-hidden">
+        <iframe
+          src="https://forms.gle/tRXqttBhpaNNvqSH9"
+          width="100%" height="600"
+          frameborder="0" marginheight="0" marginwidth="0"
+          title="活動調查表單">
+          載入中…
+        </iframe>
+      </div>
+    </section>
+
+    <!-- 地社人員表單 -->
+    <section data-aos="fade-up">
+      <h2 class="section-title">📋 地社人員表單</h2>
+      <div class="card overflow-hidden">
+        <iframe
+          src="https://docs.google.com/forms/d/e/1FAIpQLScxOVpt96iVnZCPQjl4apjMYGvGOXAU02U5I_W9I0AD7yS6hA/viewform"
+          width="100%" height="600"
+          frameborder="0" marginheight="0" marginwidth="0"
+          title="地社人員表單">
+          載入中…
+        </iframe>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+
+  <script>
+    renderHeader('活動排程');
+    renderFooter();
+    initPageTransition();
+    AOS.init({ duration: 600, once: true, offset: 80 });
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+
+    // FullCalendar 初始化
+    document.addEventListener('DOMContentLoaded', () => {
+      const calendarEl = document.getElementById('calendar');
+      const detailSection = document.getElementById('eventDetailSection');
+      const titleEl = document.getElementById('eventTitle');
+      const dateEl = document.getElementById('eventDate');
+      const descEl = document.getElementById('eventDesc');
+
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'zh-tw',
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,listMonth'
+        },
+        buttonText: { today: '今天', month: '月', list: '清單' },
+        events: (fetchInfo, successCallback, failureCallback) => {
+          db.ref('events').once('value').then(snapshot => {
+            const data = snapshot.val() || {};
+            const events = Object.entries(data).map(([id, event]) => ({
+              id,
+              title: event.title,
+              start: event.date,
+              description: event.description || '',
+              backgroundColor: '#166534',
+              borderColor: '#facc15',
+              textColor: '#fde047'
+            }));
+            successCallback(events);
+          }).catch(failureCallback);
+        },
+        eventClick: (info) => {
+          info.jsEvent.preventDefault();
+          titleEl.textContent = info.event.title;
+          dateEl.textContent = info.event.start.toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
+          descEl.textContent = info.event.extendedProps.description || '無說明';
+          detailSection.classList.remove('hidden');
+          detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+      calendar.render();
+
+      // 從 URL 參數自動展開事件
+      const params = new URLSearchParams(window.location.search);
+      const eventId = params.get('eventId');
+      if (eventId) {
+        db.ref(`events/${eventId}`).once('value').then(snap => {
+          const ev = snap.val();
+          if (ev) {
+            titleEl.textContent = ev.title;
+            dateEl.textContent = new Date(ev.date).toLocaleDateString('zh-TW', { year: 'numeric', month: 'long', day: 'numeric' });
+            descEl.textContent = ev.description || '無說明';
+            detailSection.classList.remove('hidden');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

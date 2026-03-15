@@ -1,0 +1,36 @@
+{
+  "name": "內湖高中軍武社",
+  "short_name": "NHMC",
+  "description": "內湖高中軍武社官方網站 - 紀律・榮譽・責任",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#14532d",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/images/NHMC.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/images/NHMC.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "社課簽到",
+      "url": "./pages/checkin.html",
+      "description": "快速簽到"
+    },
+    {
+      "name": "活動排程",
+      "url": "./pages/schedule.html",
+      "description": "查看活動"
+    }
+  ]
+}

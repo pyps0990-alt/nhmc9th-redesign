@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="內湖高中軍武社官方網站 - 紀律・榮譽・責任">
+  <title>內湖高中軍武社</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/NHMC.png">
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- AOS 動畫 -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <!-- 全域樣式 -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header 由 components.js 動態注入 -->
+  <div id="site-header"></div>
+
+  <!-- ========== 英雄區塊 ========== -->
+  <section class="hero-section py-24 px-4 text-center" data-aos="fade-up">
+    <div class="hero-bg" style="background-image: url('assets/images/IMG_1645.jpg');"></div>
+    <div class="relative z-10 max-w-3xl mx-auto">
+      <div class="inline-block bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-widest animate-fade-in-up">
+        NHMC · 9th · 內湖高中
+      </div>
+      <h1 class="text-4xl md:text-6xl font-bold text-yellow-300 mb-4 animate-fade-in-up animate-delay-100"
+          style="font-family:'Oswald',sans-serif; text-shadow: 0 2px 20px rgba(0,0,0,0.8);">
+        紀律・榮譽・責任
+      </h1>
+      <p class="text-base md:text-xl text-gray-300 mb-8 animate-fade-in-up animate-delay-200">
+        打造最專業的高中軍武社網站，記錄每一份榮耀時刻
+      </p>
+      <div class="flex flex-wrap justify-center gap-3 animate-fade-in-up animate-delay-300">
+        <a href="pages/about.html" class="btn btn-primary text-base px-6 py-3">
+          認識我們 →
+        </a>
+        <a href="pages/schedule.html" class="btn btn-ghost text-base px-6 py-3 border-yellow-400 text-yellow-300 hover:bg-yellow-400 hover:text-black">
+          查看活動
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 最新公告 ========== -->
+  <section class="py-12 px-4 md:px-8 bg-green-950" data-aos="fade-right">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="section-title">📣 最新公告</h2>
+      <div id="announcementList" class="space-y-3">
+        <div class="text-gray-400 text-sm py-4 text-center">載入中...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 快速入口 ========== -->
+  <section class="py-12 px-4 md:px-8" data-aos="fade-up">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="section-title">⚡ 快速入口</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <!-- 社課簽到 -->
+        <a href="pages/checkin.html"
+           class="card card-interactive p-6 bg-green-900 hover:bg-green-800 block"
+           data-aos="fade-up" data-aos-delay="0">
+          <div class="text-3xl mb-3">📝</div>
+          <h3 class="text-yellow-300 text-lg font-bold mb-1" style="font-family:'Oswald',sans-serif;">社課簽到</h3>
+          <p class="text-gray-300 text-sm">社團專用簽到系統，即時紀錄出席狀況。</p>
+        </a>
+
+        <!-- LINE 社群 -->
+        <a href="https://line.me/ti/g/ssQssHJu4D" target="_blank" rel="noopener"
+           class="card card-interactive p-6 bg-green-900 hover:bg-green-800 block"
+           data-aos="fade-up" data-aos-delay="100">
+          <div class="text-3xl mb-3">💬</div>
+          <h3 class="text-yellow-300 text-lg font-bold mb-1" style="font-family:'Oswald',sans-serif;">LINE 社群</h3>
+          <p class="text-gray-300 text-sm">加入軍武社 LINE 群組，掌握即時通知與交流。</p>
+        </a>
+
+        <!-- 槍枝借用 -->
+        <a href="pages/gun-loan.html"
+           class="card card-interactive p-6 bg-green-900 hover:bg-green-800 block"
+           data-aos="fade-up" data-aos-delay="200">
+          <div class="text-3xl mb-3">🔫</div>
+          <h3 class="text-yellow-300 text-lg font-bold mb-1" style="font-family:'Oswald',sans-serif;">槍枝借用</h3>
+          <p class="text-gray-300 text-sm">管理槍枝借出與歸還，精確掌控器材數量。</p>
+        </a>
+
+        <!-- 活動排程 -->
+        <a href="pages/schedule.html"
+           class="card card-interactive p-6 bg-gray-800 hover:bg-gray-700 block"
+           data-aos="fade-up" data-aos-delay="300">
+          <div class="text-3xl mb-3">📅</div>
+          <h3 class="text-yellow-300 text-lg font-bold mb-1" style="font-family:'Oswald',sans-serif;">活動排程</h3>
+          <p class="text-gray-300 text-sm">查看社團活動日曆，掌握每次社課時間。</p>
+        </a>
+
+        <!-- 財務紀錄 -->
+        <a href="pages/finance.html"
+           class="card card-interactive p-6 bg-gray-800 hover:bg-gray-700 block"
+           data-aos="fade-up" data-aos-delay="400">
+          <div class="text-3xl mb-3">💰</div>
+          <h3 class="text-yellow-300 text-lg font-bold mb-1" style="font-family:'Oswald',sans-serif;">財務紀錄</h3>
+          <p class="text-gray-300 text-sm">透明公開的社費收支紀錄，讓每筆帳目清晰。</p>
+        </a>
+
+        <!-- 知識分享 -->
+        <a href="pages/knowledge.html"
+           class="card card-interactive p-6 bg-gray-800 hover:bg-gray-700 block"
+           data-aos="fade-up" data-aos-delay="500">
+          <div class="text-3xl mb-3">📚</div>
+          <h3 class="text-yellow-300 text-lg font-bold mb-1" style="font-family:'Oswald',sans-serif;">知識分享</h3>
+          <p class="text-gray-300 text-sm">軍事知識、技巧分享，持續精進社員能力。</p>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 活動精華影片 ========== -->
+  <section class="py-12 px-4 md:px-8 bg-gray-950" data-aos="zoom-in">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="section-title justify-center">🎥 活動精華影片</h2>
+      <div class="relative w-full rounded-xl overflow-hidden shadow-2xl" style="padding-bottom: 56.25%;">
+        <iframe
+          src="https://www.youtube.com/embed/N3kuLgAiLJc"
+          class="absolute top-0 left-0 w-full h-full"
+          frameborder="0"
+          allowfullscreen
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          title="NHMC 活動精華影片">
+        </iframe>
+      </div>
+      <p class="text-gray-400 mt-4 text-sm">影片由幹部剪輯，完整記錄軍武社的榮耀時刻</p>
+    </div>
+  </section>
+
+  <!-- ========== 統計數字 ========== -->
+  <section class="py-12 px-4 md:px-8 bg-green-950" data-aos="fade-up">
+    <div class="max-w-4xl mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div class="p-4">
+          <div class="text-3xl md:text-4xl font-bold text-yellow-400 mb-1" style="font-family:'Oswald',sans-serif;">9th</div>
+          <div class="text-gray-400 text-sm">屆次</div>
+        </div>
+        <div class="p-4">
+          <div class="text-3xl md:text-4xl font-bold text-yellow-400 mb-1" style="font-family:'Oswald',sans-serif;">NHMC</div>
+          <div class="text-gray-400 text-sm">社團代號</div>
+        </div>
+        <div class="p-4">
+          <div class="text-3xl md:text-4xl font-bold text-yellow-400 mb-1" style="font-family:'Oswald',sans-serif;">C205</div>
+          <div class="text-gray-400 text-sm">社課教室</div>
+        </div>
+        <div class="p-4">
+          <div class="text-3xl md:text-4xl font-bold text-yellow-400 mb-1" style="font-family:'Oswald',sans-serif;">2025</div>
+          <div class="text-gray-400 text-sm">學年度</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer 由 components.js 動態注入 -->
+  <div id="site-footer"></div>
+
+  <!-- ========== Firebase SDK ========== -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <!-- 共用設定 -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/components.js"></script>
+
+  <!-- AOS JS -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    // 初始化共用元件
+    renderHeader('首頁');
+    renderFooter();
+    initPageTransition();
+
+    // AOS 初始化
+    AOS.init({
+      duration: 600,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 80
+    });
+
+    // 頁面載入完成
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+    });
+
+    // ========== 最新公告 ==========
+    const announcementList = document.getElementById('announcementList');
+    const announceRef = db.ref('announcements');
+
+    announceRef.on('value', snapshot => {
+      const data = snapshot.val() || {};
+      const now = Date.now();
+      const entries = Object.entries(data);
+
+      if (entries.length === 0) {
+        announcementList.innerHTML = '<div class="text-gray-500 text-sm py-4 text-center">目前沒有公告</div>';
+        return;
+      }
+
+      announcementList.innerHTML = '';
+
+      // 排序：有效公告優先，再按時間倒序
+      entries
+        .sort((a, b) => (b[1].timestamp || 0) - (a[1].timestamp || 0))
+        .forEach(([key, item]) => {
+          const isExpired = item.expiresAt && item.expiresAt < now;
+          const time = item.timestamp ? new Date(item.timestamp).toLocaleDateString('zh-TW') : '';
+          const expire = item.expiresAt ? new Date(item.expiresAt).toLocaleDateString('zh-TW') : '無期限';
+
+          const div = document.createElement('div');
+          div.className = `announcement-item ${isExpired ? 'expired' : ''}`;
+          div.dataset.eventId = key;
+          div.innerHTML = `
+            <div class="flex items-start justify-between gap-3">
+              <p class="text-sm ${isExpired ? 'line-through text-gray-500' : 'text-gray-200'} flex-1">
+                ${item.text || ''}
+              </p>
+              ${!isExpired ? '<span class="badge badge-success shrink-0">生效中</span>' : '<span class="badge badge-warning shrink-0">已過期</span>'}
+            </div>
+            <div class="mt-1.5 text-xs text-gray-500">
+              🕒 發布：${time}　失效：${expire}
+            </div>
+          `;
+
+          if (!isExpired) {
+            div.addEventListener('click', () => {
+              window.location.href = `pages/schedule.html?eventId=${key}`;
+            });
+          }
+
+          announcementList.appendChild(div);
+        });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="內湖高中軍武社 - 關於我們">
+  <title>關於我們 | 內湖高中軍武社</title>
+
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <!-- ========== 頁面標題區 ========== -->
+  <section class="hero-section py-16 px-4 text-center" data-aos="fade-up">
+    <div class="hero-bg" style="background-image: url('../assets/images/IMG_1645.jpg');"></div>
+    <div class="relative z-10">
+      <h1 class="text-4xl md:text-5xl font-bold text-yellow-300 mb-2" style="font-family:'Oswald',sans-serif;">關於我們</h1>
+      <p class="text-gray-400 text-sm uppercase tracking-widest">About NHMC</p>
+    </div>
+  </section>
+
+  <!-- ========== 主內容 ========== -->
+  <main class="max-w-5xl mx-auto px-4 py-12 space-y-12">
+
+    <!-- 社團簡介 -->
+    <section data-aos="fade-up">
+      <h2 class="section-title">🎖 社團簡介</h2>
+      <div class="card p-6 md:p-8">
+        <p class="text-gray-300 leading-relaxed text-base mb-4">
+          內湖高中軍武社（NHMC）是一個以軍事文化、射擊技術與紀律精神為核心的社團。
+          我們致力於培養社員的責任感、團隊合作能力，以及對軍事知識的深度理解。
+        </p>
+        <p class="text-gray-300 leading-relaxed text-base">
+          社團成立以來，每週定期舉辦社課，涵蓋射擊訓練、軍事知識講座、體能訓練等多元活動，
+          讓每位社員都能在充實的環境中成長。
+        </p>
+      </div>
+    </section>
+
+    <!-- 核心價值 -->
+    <section data-aos="fade-up">
+      <h2 class="section-title">⭐ 核心價值</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="card p-6 text-center bg-green-900" data-aos="fade-up" data-aos-delay="0">
+          <div class="text-4xl mb-3">⚔️</div>
+          <h3 class="text-yellow-300 text-xl font-bold mb-2" style="font-family:'Oswald',sans-serif;">紀律</h3>
+          <p class="text-gray-300 text-sm leading-relaxed">嚴格遵守社團規範，培養自律精神，在每次訓練中展現最佳狀態。</p>
+        </div>
+        <div class="card p-6 text-center bg-green-900" data-aos="fade-up" data-aos-delay="100">
+          <div class="text-4xl mb-3">🏅</div>
+          <h3 class="text-yellow-300 text-xl font-bold mb-2" style="font-family:'Oswald',sans-serif;">榮譽</h3>
+          <p class="text-gray-300 text-sm leading-relaxed">以社團為榮，以學校為傲，在每個場合都代表最高水準的表現。</p>
+        </div>
+        <div class="card p-6 text-center bg-green-900" data-aos="fade-up" data-aos-delay="200">
+          <div class="text-4xl mb-3">🛡️</div>
+          <h3 class="text-yellow-300 text-xl font-bold mb-2" style="font-family:'Oswald',sans-serif;">責任</h3>
+          <p class="text-gray-300 text-sm leading-relaxed">對自己、對隊友、對器材負責，每一個行動都承擔應有的責任。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 幹部名單 -->
+    <section data-aos="fade-up">
+      <h2 class="section-title">👥 幹部名單</h2>
+      <div class="card overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>職位</th>
+                <th>姓名</th>
+                <th>班級</th>
+              </tr>
+            </thead>
+            <tbody id="officerTable">
+              <tr>
+                <td colspan="3" class="text-center text-gray-500 py-6">載入中...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 社團資訊 -->
+    <section data-aos="fade-up">
+      <h2 class="section-title">📋 社團資訊</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="card p-6 space-y-4">
+          <h3 class="text-yellow-300 font-bold text-lg" style="font-family:'Oswald',sans-serif;">📍 集合地點</h3>
+          <div class="space-y-2 text-sm text-gray-300">
+            <div class="flex items-start gap-3">
+              <span class="text-yellow-400 shrink-0">🏫</span>
+              <div>
+                <div class="font-semibold text-white">主要教室</div>
+                <div class="text-gray-400">C棟 5樓 205 教室（靠近旋轉樓梯口）</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-yellow-400 shrink-0">🔧</span>
+              <div>
+                <div class="font-semibold text-white">器材室 &amp; 靶場</div>
+                <div class="text-gray-400">A棟地下室（由A棟樓梯下去）</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card p-6 space-y-4">
+          <h3 class="text-yellow-300 font-bold text-lg" style="font-family:'Oswald',sans-serif;">📱 聯絡方式</h3>
+          <div class="space-y-2 text-sm text-gray-300">
+            <div class="flex items-center gap-3">
+              <span class="text-yellow-400">💬</span>
+              <a href="https://line.me/ti/g/ssQssHJu4D" target="_blank" rel="noopener"
+                 class="text-blue-400 hover:text-blue-300 transition-colors">LINE 社群群組</a>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-yellow-400">📸</span>
+              <span>Instagram：@nhmc.9th</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    renderHeader('關於我們');
+    renderFooter();
+    initPageTransition();
+    AOS.init({ duration: 600, once: true, offset: 80 });
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+
+    // 載入幹部名單
+    const officerTable = document.getElementById('officerTable');
+    db.ref('officers').on('value', snapshot => {
+      const data = snapshot.val();
+      if (!data) {
+        // 顯示預設幹部資料（若 Firebase 無資料）
+        officerTable.innerHTML = `
+          <tr><td><span class="badge badge-warning">社長</span></td><td>（待更新）</td><td>—</td></tr>
+          <tr><td><span class="badge badge-info">副社長</span></td><td>（待更新）</td><td>—</td></tr>
+          <tr><td><span class="badge badge-success">幹部</span></td><td>奕嘉</td><td>—</td></tr>
+        `;
+        return;
+      }
+      officerTable.innerHTML = Object.values(data).map(o => `
+        <tr>
+          <td><span class="badge badge-warning">${o.role || '幹部'}</span></td>
+          <td class="font-medium">${o.name || '—'}</td>
+          <td class="text-gray-400">${o.class || '—'}</td>
+        </tr>
+      `).join('');
+    });
+  </script>
+</body>
+</html>

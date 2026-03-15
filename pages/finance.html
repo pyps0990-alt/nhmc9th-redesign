@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="內湖高中軍武社 - 財務紀錄">
+  <title>財務紀錄 | 內湖高中軍武社</title>
+
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <!-- 頁面標題 -->
+  <section class="bg-green-950 py-10 px-4 text-center" data-aos="fade-up">
+    <h1 class="text-3xl md:text-4xl font-bold text-yellow-300 mb-1" style="font-family:'Oswald',sans-serif;">財務紀錄</h1>
+    <p class="text-gray-400 text-sm">透明公開的社費收支紀錄</p>
+  </section>
+
+  <main class="max-w-5xl mx-auto px-4 py-10 space-y-8">
+
+    <!-- 餘額總覽 -->
+    <section data-aos="fade-up">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="card p-6 text-center bg-green-900">
+          <div class="text-green-300 text-xs font-semibold uppercase tracking-wider mb-2">總收入</div>
+          <div id="totalIncome" class="text-3xl font-bold text-white" style="font-family:'Oswald',sans-serif;">NT$ 0</div>
+        </div>
+        <div class="card p-6 text-center bg-red-950">
+          <div class="text-red-300 text-xs font-semibold uppercase tracking-wider mb-2">總支出</div>
+          <div id="totalExpense" class="text-3xl font-bold text-white" style="font-family:'Oswald',sans-serif;">NT$ 0</div>
+        </div>
+        <div class="card p-6 text-center" id="balanceCard">
+          <div class="text-yellow-300 text-xs font-semibold uppercase tracking-wider mb-2">結餘</div>
+          <div id="balanceAmount" class="text-3xl font-bold text-white" style="font-family:'Oswald',sans-serif;">NT$ 0</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 收支明細 -->
+    <section data-aos="fade-up">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- 收入表 -->
+        <div>
+          <h2 class="section-title text-green-300">
+            📥 收入明細
+            <span class="text-xs font-normal text-gray-500 ml-auto" style="font-family:inherit;">（單位：新台幣）</span>
+          </h2>
+          <div class="card overflow-hidden">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th class="text-green-300">項目</th>
+                  <th class="text-green-300 text-right">金額</th>
+                </tr>
+              </thead>
+              <tbody id="incomeTable">
+                <tr><td colspan="2" class="text-center text-gray-500 py-6">載入中...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 支出表 -->
+        <div>
+          <h2 class="section-title text-red-300">
+            📤 支出明細
+            <span class="text-xs font-normal text-gray-500 ml-auto" style="font-family:inherit;">（單位：新台幣）</span>
+          </h2>
+          <div class="card overflow-hidden">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th class="text-red-300">項目</th>
+                  <th class="text-red-300 text-right">金額</th>
+                </tr>
+              </thead>
+              <tbody id="expenseTable">
+                <tr><td colspan="2" class="text-center text-gray-500 py-6">載入中...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 說明 -->
+    <section data-aos="fade-up">
+      <div class="card p-5 border border-yellow-900 bg-yellow-950">
+        <p class="text-yellow-200 text-sm flex items-start gap-2">
+          <span class="shrink-0">ℹ️</span>
+          <span>財務紀錄由社團幹部負責維護，如有疑問請聯絡社長或財務幹部。所有收支皆以實際發生為準。</span>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    renderHeader('財務紀錄');
+    renderFooter();
+    initPageTransition();
+    AOS.init({ duration: 600, once: true, offset: 80 });
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+
+    function formatCurrency(num) {
+      return 'NT$ ' + Number(num).toLocaleString('zh-TW', { style: 'decimal' });
+    }
+
+    const incomeTable = document.getElementById('incomeTable');
+    const expenseTable = document.getElementById('expenseTable');
+    const totalIncomeEl = document.getElementById('totalIncome');
+    const totalExpenseEl = document.getElementById('totalExpense');
+    const balanceAmountEl = document.getElementById('balanceAmount');
+    const balanceCard = document.getElementById('balanceCard');
+
+    db.ref('finance/record').on('value', snapshot => {
+      const data = snapshot.val() || {};
+      incomeTable.innerHTML = '';
+      expenseTable.innerHTML = '';
+      let totalIncome = 0;
+      let totalExpense = 0;
+
+      if (data.income && Object.keys(data.income).length > 0) {
+        Object.values(data.income).forEach(item => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="font-medium">${item.item}</td>
+            <td class="text-right font-mono text-green-400">${formatCurrency(item.amount)}</td>
+          `;
+          incomeTable.appendChild(tr);
+          totalIncome += Number(item.amount);
+        });
+      } else {
+        incomeTable.innerHTML = '<tr><td colspan="2" class="text-center text-gray-500 py-4">尚無收入紀錄</td></tr>';
+      }
+
+      if (data.expense && Object.keys(data.expense).length > 0) {
+        Object.values(data.expense).forEach(item => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="font-medium">${item.item}</td>
+            <td class="text-right font-mono text-red-400">${formatCurrency(item.amount)}</td>
+          `;
+          expenseTable.appendChild(tr);
+          totalExpense += Number(item.amount);
+        });
+      } else {
+        expenseTable.innerHTML = '<tr><td colspan="2" class="text-center text-gray-500 py-4">尚無支出紀錄</td></tr>';
+      }
+
+      const balance = totalIncome - totalExpense;
+      totalIncomeEl.textContent = formatCurrency(totalIncome);
+      totalExpenseEl.textContent = formatCurrency(totalExpense);
+      balanceAmountEl.textContent = formatCurrency(balance);
+
+      // 餘額顏色
+      if (balance > 0) {
+        balanceCard.classList.add('bg-green-900');
+        balanceCard.classList.remove('bg-red-950', 'bg-gray-800');
+        balanceAmountEl.classList.add('text-green-300');
+      } else if (balance < 0) {
+        balanceCard.classList.add('bg-red-950');
+        balanceCard.classList.remove('bg-green-900', 'bg-gray-800');
+        balanceAmountEl.classList.add('text-red-300');
+      } else {
+        balanceCard.classList.add('bg-gray-800');
+        balanceCard.classList.remove('bg-green-900', 'bg-red-950');
+      }
+    });
+  </script>
+</body>
+</html>

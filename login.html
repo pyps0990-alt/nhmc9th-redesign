@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="內湖高中軍武社 - 幹部登入">
+  <title>幹部登入 | 內湖高中軍武社</title>
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+  <div class="w-full max-w-md px-4">
+
+    <!-- Logo -->
+    <div class="text-center mb-8">
+      <img src="assets/images/NHMC.png" alt="NHMC Logo"
+           class="w-16 h-16 rounded-full border-2 border-yellow-400 mx-auto mb-3 object-cover"
+           onerror="this.style.display='none'">
+      <h1 class="text-2xl font-bold text-yellow-300" style="font-family:'Oswald',sans-serif;">內湖高中軍武社</h1>
+      <p class="text-gray-500 text-sm mt-1">幹部專屬登入</p>
+    </div>
+
+    <!-- 登入卡片 -->
+    <div class="card p-8 bg-green-950 border border-green-800">
+      <h2 class="text-xl font-bold text-yellow-300 mb-6 text-center" style="font-family:'Oswald',sans-serif;">🔐 幹部登入</h2>
+
+      <div class="space-y-4">
+        <div>
+          <label class="form-label" for="email">電子郵件</label>
+          <input type="email" id="email" class="form-input" placeholder="輸入幹部 Email" autocomplete="email">
+        </div>
+        <div>
+          <label class="form-label" for="password">密碼</label>
+          <input type="password" id="password" class="form-input" placeholder="輸入密碼" autocomplete="current-password">
+        </div>
+
+        <p id="errorMsg" class="text-red-400 text-sm hidden"></p>
+
+        <button onclick="login()" id="loginBtn" class="btn btn-primary w-full py-3 text-base">
+          登入
+        </button>
+      </div>
+
+      <div class="mt-6 text-center">
+        <a href="index.html" class="text-gray-500 hover:text-gray-300 text-sm transition-colors">
+          ← 返回首頁
+        </a>
+      </div>
+    </div>
+
+    <p class="text-center text-gray-600 text-xs mt-6">&copy; 2025 內湖高中軍武社</p>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+
+  <script>
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+
+    function login() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const errorMsg = document.getElementById('errorMsg');
+      const loginBtn = document.getElementById('loginBtn');
+
+      if (!email || !password) {
+        errorMsg.textContent = '請輸入 Email 和密碼';
+        errorMsg.classList.remove('hidden');
+        return;
+      }
+
+      loginBtn.textContent = '登入中...';
+      loginBtn.disabled = true;
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          window.location.href = 'pages/admin.html';
+        })
+        .catch(error => {
+          let msg = '登入失敗，請確認帳號密碼';
+          if (error.code === 'auth/user-not-found') msg = '找不到此帳號';
+          else if (error.code === 'auth/wrong-password') msg = '密碼錯誤';
+          else if (error.code === 'auth/invalid-email') msg = 'Email 格式不正確';
+          else if (error.code === 'auth/too-many-requests') msg = '嘗試次數過多，請稍後再試';
+          errorMsg.textContent = msg;
+          errorMsg.classList.remove('hidden');
+          loginBtn.textContent = '登入';
+          loginBtn.disabled = false;
+        });
+    }
+
+    // Enter 鍵觸發登入
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') login();
+    });
+
+    // 已登入則直接跳轉
+    auth.onAuthStateChanged(user => {
+      if (user) window.location.href = 'pages/admin.html';
+    });
+  </script>
+</body>
+</html>
