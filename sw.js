@@ -5,22 +5,22 @@
 
 const CACHE_NAME = 'nhmc-v2';
 const STATIC_ASSETS = [
-  '/nhmc9th-redesign/',
-  '/nhmc9th-redesign/index.html',
-  '/nhmc9th-redesign/style.css',
-  '/nhmc9th-redesign/manifest.json',
-  '/nhmc9th-redesign/js/firebase-config.js',
-  '/nhmc9th-redesign/js/components.js',
-  '/nhmc9th-redesign/assets/images/NHMC.png',
-  '/nhmc9th-redesign/assets/images/IMG_1645.jpg',
-  '/nhmc9th-redesign/assets/images/classroom.png',
-  '/nhmc9th-redesign/pages/about.html',
-  '/nhmc9th-redesign/pages/schedule.html',
-  '/nhmc9th-redesign/pages/checkin.html',
-  '/nhmc9th-redesign/pages/finance.html',
-  '/nhmc9th-redesign/pages/knowledge.html',
-  '/nhmc9th-redesign/pages/map.html',
-  '/nhmc9th-redesign/pages/gun-loan.html'
+  './',
+  './index.html',
+  './style.css',
+  './manifest.json',
+  './js/firebase-config.js',
+  './js/components.js',
+  './assets/images/NHMC.png',
+  './assets/images/IMG_1645.jpg',
+  './assets/images/classroom.png',
+  './pages/about.html',
+  './pages/schedule.html',
+  './pages/checkin.html',
+  './pages/finance.html',
+  './pages/knowledge.html',
+  './pages/map.html',
+  './pages/gun-loan.html'
 ];
 
 // 安裝：快取靜態資源
@@ -67,7 +67,7 @@ self.addEventListener('fetch', event => {
           if (cached) return cached;
           // 返回離線頁面
           if (event.request.destination === 'document') {
-            return caches.match('/nhmc9th-redesign/index.html');
+            return caches.match('./index.html');
           }
         });
       })

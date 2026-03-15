@@ -2,7 +2,7 @@
   "name": "內湖高中軍武社",
   "short_name": "NHMC",
   "description": "內湖高中軍武社官方網站 - 紀律・榮譽・責任",
-  "start_url": "/nhmc9th-redesign/index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#111827",
   "theme_color": "#14532d",

@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -12,8 +12,14 @@
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <style>
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
     .tab-btn.active {
       background-color: var(--color-primary);
       color: var(--color-background);
@@ -21,17 +27,26 @@
     }
   </style>
 </head>
+
 <body>
+  <!-- 液態流動背景 -->
+  <div class="liquid-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
   <div id="site-header"></div>
 
   <!-- 頁面標題 -->
   <section class="hero-section py-16 px-4 text-center" data-aos="fade-up">
     <div class="hero-bg" style="background-image: url('../assets/images/IMG_1645.jpg');"></div>
     <div class="relative z-10">
-      <h1 class="text-4xl md:text-5xl font-bold text-yellow-300 mb-2" style="font-family:'Oswald',sans-serif;">幹部後台</h1>
+      <h1 class="hero-title text-4xl md:text-5xl font-bold text-yellow-300 mb-2" style="font-family:'Oswald',sans-serif;">幹部後台</h1>
       <p class="text-gray-400 text-sm uppercase tracking-widest">Admin Panel</p>
       <p class="text-gray-400 text-sm mt-2">登入帳號：<span id="adminEmail" class="text-primary">載入中...</span></p>
-      <button id="logoutBtn" class="btn btn-danger mt-4">🚪 登出</button>
+      <button id="logoutBtn"
+        class="btn btn-danger mt-6 px-8 py-2.5 rounded-full shadow-[0_10px_20px_-10px_rgba(239,68,68,0.5)] tracking-widest text-sm transition-transform hover:-translate-y-1">🚪
+        登出系統</button>
     </div>
   </section>
 
@@ -39,21 +54,28 @@
   <div class="bg-gray-900 border-b border-gray-800 sticky top-[60px] z-40">
     <div class="max-w-6xl mx-auto px-4">
       <div class="flex overflow-x-auto gap-1 py-2 scrollbar-hide">
-        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-3 py-2 shrink-0 rounded-md active" data-target="announceModule">📣 公告管理</button>
-        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-3 py-2 shrink-0 rounded-md" data-target="eventModule">📅 活動管理</button>
-        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-3 py-2 shrink-0 rounded-md" data-target="dailyModule">📝 單日簽到</button>
-        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-3 py-2 shrink-0 rounded-md" data-target="summaryModule">📊 出席總覽</button>
-        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-3 py-2 shrink-0 rounded-md" data-target="studentModule">👨‍🎓 學生管理</button>
-        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-3 py-2 shrink-0 rounded-md" data-target="financeModule">💰 財務管理</button>
+        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-4 py-2 shrink-0 rounded-full active"
+          data-target="announceModule">📣 公告管理</button>
+        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-4 py-2 shrink-0 rounded-full"
+          data-target="eventModule">📅 活動管理</button>
+        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-4 py-2 shrink-0 rounded-full"
+          data-target="dailyModule">📝 單日簽到</button>
+        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-4 py-2 shrink-0 rounded-full"
+          data-target="summaryModule">📊 出席總覽</button>
+        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-4 py-2 shrink-0 rounded-full"
+          data-target="studentModule">👨‍🎓 學生管理</button>
+        <button class="tab-btn btn btn-ghost text-xs md:text-sm px-4 py-2 shrink-0 rounded-full"
+          data-target="financeModule">💰 財務管理</button>
       </div>
     </div>
   </div>
 
-  <main class="max-w-6xl mx-auto px-4 py-8">
+  <main class="max-w-6xl mx-auto px-4 py-12">
 
     <!-- ===== 公告管理 ===== -->
     <section id="announceModule" class="tab-content active space-y-6">
-      <h2 class="section-title">📣 公告管理</h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>公告管理 <span
+          class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">Announcements</span></h2>
 
       <!-- 新增公告 -->
       <div class="card p-6">
@@ -73,7 +95,8 @@
               <input id="announceExpiry" type="date" class="form-input">
             </div>
           </div>
-          <button onclick="addAnnouncement()" class="btn btn-primary">發布公告</button>
+          <button onclick="addAnnouncement()"
+            class="btn btn-primary w-full py-3.5 mt-2 rounded-full shadow-[0_10px_20px_-10px_rgba(250,204,21,0.5)] tracking-widest">發布公告</button>
         </div>
       </div>
 
@@ -88,7 +111,8 @@
 
     <!-- ===== 活動管理 ===== -->
     <section id="eventModule" class="tab-content space-y-6">
-      <h2 class="section-title">📅 活動管理</h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>活動管理 <span
+          class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">Events</span></h2>
 
       <!-- 新增活動 -->
       <div class="card p-6">
@@ -107,7 +131,8 @@
             <textarea id="eventDesc" rows="2" class="form-input resize-none" placeholder="活動說明（選填）"></textarea>
           </div>
         </div>
-        <button onclick="addEvent()" class="btn btn-primary mt-4">新增活動</button>
+        <button onclick="addEvent()"
+          class="btn btn-primary w-full py-3.5 mt-5 rounded-full shadow-[0_10px_20px_-10px_rgba(250,204,21,0.5)] tracking-widest">新增活動</button>
       </div>
 
       <!-- 活動列表 -->
@@ -122,7 +147,9 @@
             </tr>
           </thead>
           <tbody id="eventList">
-            <tr><td colspan="4" class="text-center text-gray-500 py-6">載入中...</td></tr>
+            <tr>
+              <td colspan="4" class="text-center text-gray-500 py-6">載入中...</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -130,16 +157,18 @@
 
     <!-- ===== 單日簽到管理 ===== -->
     <section id="dailyModule" class="tab-content space-y-6">
-      <h2 class="section-title">📝 單日簽到管理</h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>單日簽到管理 <span
+          class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">Daily Check-in</span></h2>
       <div class="card p-5">
         <div class="flex flex-wrap items-end gap-3 mb-4">
           <div>
             <label class="form-label">選擇日期</label>
             <input type="date" id="datePicker" class="form-input">
           </div>
-          <button id="loadRecordsBtn" class="btn btn-secondary">載入紀錄</button>
-          <button id="exportBtn" class="btn btn-ghost">匯出 Excel</button>
-          <button id="fillAbsentBtn" class="btn btn-danger">一鍵補全缺席</button>
+          <button id="loadRecordsBtn"
+            class="btn btn-secondary rounded-full px-6 shadow-lg hover:border-white/30">載入紀錄</button>
+          <button id="exportBtn" class="btn btn-ghost rounded-full px-6">匯出 Excel</button>
+          <button id="fillAbsentBtn" class="btn btn-danger rounded-full px-6 shadow-lg">一鍵補全缺席</button>
         </div>
         <div class="overflow-x-auto">
           <table class="data-table" id="recordsTable">
@@ -154,7 +183,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td colspan="6" class="text-center text-gray-500 py-6">請選擇日期後載入紀錄</td></tr>
+              <tr>
+                <td colspan="6" class="text-center text-gray-500 py-6">請選擇日期後載入紀錄</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -163,7 +194,8 @@
 
     <!-- ===== 出席總覽 ===== -->
     <section id="summaryModule" class="tab-content space-y-6">
-      <h2 class="section-title">📊 出席總覽</h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>出席總覽 <span
+          class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">Attendance Summary</span></h2>
       <div class="card p-5">
         <div class="flex flex-wrap items-end gap-3 mb-4">
           <div>
@@ -174,8 +206,9 @@
             <label class="form-label">結束日期</label>
             <input type="date" id="endDate" class="form-input">
           </div>
-          <button id="loadSummaryBtn" class="btn btn-secondary">載入總覽</button>
-          <button id="exportSummaryBtn" class="btn btn-ghost">匯出 Excel</button>
+          <button id="loadSummaryBtn"
+            class="btn btn-secondary rounded-full px-6 shadow-lg hover:border-white/30">載入總覽</button>
+          <button id="exportSummaryBtn" class="btn btn-ghost rounded-full px-6">匯出 Excel</button>
         </div>
         <div class="overflow-x-auto">
           <table class="data-table" id="summaryTable">
@@ -187,7 +220,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td colspan="3" class="text-center text-gray-500 py-6">請選擇日期範圍後載入</td></tr>
+              <tr>
+                <td colspan="3" class="text-center text-gray-500 py-6">請選擇日期範圍後載入</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -196,7 +231,8 @@
 
     <!-- ===== 學生管理 ===== -->
     <section id="studentModule" class="tab-content space-y-6">
-      <h2 class="section-title">👨‍🎓 學生名單管理</h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>學生名單管理 <span
+          class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">Students</span></h2>
       <div class="card p-6">
         <h3 class="text-primary font-bold mb-4" style="font-family:'Oswald',sans-serif;">➕ 新增學生</h3>
         <form id="studentForm" class="flex flex-wrap gap-3">
@@ -209,7 +245,8 @@
             <input type="text" id="studentNameInput" placeholder="輸入姓名" required class="form-input">
           </div>
           <div class="flex items-end">
-            <button type="submit" class="btn btn-primary">新增</button>
+            <button type="submit"
+              class="btn btn-primary px-8 py-3 rounded-full shadow-[0_10px_20px_-10px_rgba(250,204,21,0.5)] tracking-widest">新增學生</button>
           </div>
         </form>
       </div>
@@ -223,7 +260,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td colspan="3" class="text-center text-gray-500 py-6">載入中...</td></tr>
+            <tr>
+              <td colspan="3" class="text-center text-gray-500 py-6">載入中...</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -231,7 +270,8 @@
 
     <!-- ===== 財務管理 ===== -->
     <section id="financeModule" class="tab-content space-y-6">
-      <h2 class="section-title">💰 財務管理</h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>財務管理 <span
+          class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">Finance</span></h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
         <!-- 新增收入 -->
@@ -246,7 +286,8 @@
               <label class="form-label">金額（NT$）</label>
               <input id="incomeAmount" type="number" class="form-input" placeholder="0">
             </div>
-            <button onclick="addFinance('income')" class="btn btn-secondary w-full">新增收入</button>
+            <button onclick="addFinance('income')"
+              class="btn btn-secondary w-full py-3 mt-2 rounded-full tracking-widest shadow-lg hover:border-white/30">新增收入</button>
           </div>
         </div>
 
@@ -262,7 +303,8 @@
               <label class="form-label">金額（NT$）</label>
               <input id="expenseAmount" type="number" class="form-input" placeholder="0">
             </div>
-            <button onclick="addFinance('expense')" class="btn btn-danger w-full">新增支出</button>
+            <button onclick="addFinance('expense')"
+              class="btn btn-danger w-full py-3 mt-2 rounded-full tracking-widest shadow-[0_10px_20px_-10px_rgba(239,68,68,0.5)]">新增支出</button>
           </div>
         </div>
       </div>
@@ -285,9 +327,10 @@
     // 全域初始化
     renderHeader('幹部後台');
     renderFooter();
-    initPageTransition();
-    AOS.init({ duration: 600, once: true, offset: 80 });
-    window.addEventListener('load', () => document.body.classList.add('loaded'));
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+      AOS.init({ duration: 400, once: true, offset: 50 });
+    });
 
     // Tab 切換邏輯
     const tabs = document.querySelectorAll('.tab-btn');
@@ -343,7 +386,7 @@
               <p class="text-white">${a.text}</p>
               <p class="text-xs text-gray-400 mt-1">發布於: ${new Date(a.timestamp).toLocaleString()}</p>
             </div>
-            <button onclick="deleteAnnouncement('${id}')" class="btn btn-danger btn-sm">刪除</button>
+            <button onclick="deleteAnnouncement('${id}')" class="btn btn-danger px-4 py-1.5 text-xs rounded-full shadow-lg transition-transform hover:scale-105">刪除</button>
           `;
           announceList.prepend(div);
         }
@@ -397,7 +440,7 @@
             <td>${e.date}</td>
             <td class="text-gray-400 text-sm">${e.description || '-'}</td>
             <td class="text-center">
-              <button onclick="deleteEvent('${id}')" class="btn btn-danger btn-sm">刪除</button>
+              <button onclick="deleteEvent('${id}')" class="btn btn-danger px-4 py-1.5 text-xs rounded-full shadow-lg transition-transform hover:scale-105">刪除</button>
             </td>
           `;
           eventList.prepend(tr);
@@ -448,7 +491,7 @@
             <td>${id}</td>
             <td>${s.name}</td>
             <td class="text-center">
-              <button onclick="deleteStudent('${id}')" class="btn btn-danger btn-sm">刪除</button>
+              <button onclick="deleteStudent('${id}')" class="btn btn-danger px-4 py-1.5 text-xs rounded-full shadow-lg transition-transform hover:scale-105">刪除</button>
             </td>
           `;
           studentTable.appendChild(tr);
@@ -509,4 +552,5 @@
 
   </script>
 </body>
+
 </html>

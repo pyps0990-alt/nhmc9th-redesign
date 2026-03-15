@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -14,25 +15,31 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplemde@1.11.2/dist/simplemde.min.css">
   <style>
     /* SimpleMDE 深色主題覆寫 */
-    .CodeMirror, .CodeMirror-scroll {
+    .CodeMirror,
+    .CodeMirror-scroll {
       background-color: var(--color-background-dark);
       color: var(--color-text-light);
       border-color: var(--color-border) !important;
       border-radius: 0.5rem;
     }
+
     .editor-toolbar {
       background-color: var(--color-card-bg);
       border-color: var(--color-border);
       border-top-left-radius: 0.5rem;
       border-top-right-radius: 0.5rem;
     }
+
     .editor-toolbar button {
       color: var(--color-text-light);
     }
-    .editor-toolbar button.active, .editor-toolbar button:hover {
+
+    .editor-toolbar button.active,
+    .editor-toolbar button:hover {
       background-color: var(--color-secondary);
       color: var(--color-primary);
     }
+
     .editor-statusbar {
       background-color: var(--color-card-bg);
       border-color: var(--color-border);
@@ -40,29 +47,39 @@
       border-bottom-left-radius: 0.5rem;
       border-bottom-right-radius: 0.5rem;
     }
+
     .CodeMirror-fullscreen {
       background-color: var(--color-background);
     }
   </style>
 </head>
+
 <body>
+  <!-- 液態流動背景 -->
+  <div class="liquid-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
   <div id="site-header"></div>
 
   <!-- ========== 頁面標題區 ========== -->
   <section class="hero-section py-16 px-4 text-center" data-aos="fade-up">
-    <div class="hero-bg" style="background-image: url(\'../assets/images/IMG_1645.jpg\');"></div>
-    <div class="relative z-10">
-      <h1 class="text-4xl md:text-5xl font-bold text-yellow-300 mb-2" style="font-family:\'Oswald\',sans-serif;">知識分享</h1>
+    <div class="hero-bg" style="background-image: url('../assets/images/IMG_1645.jpg');"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background z-10"></div>
+    <div class="relative z-20">
+      <h1 class="hero-title text-4xl md:text-5xl font-bold text-yellow-300 mb-2" style="font-family:'Oswald',sans-serif;">知識分享</h1>
       <p class="text-gray-400 text-sm uppercase tracking-widest">Knowledge Hub</p>
     </div>
   </section>
 
   <!-- ========== 主內容 ========== -->
-  <main class="max-w-5xl mx-auto px-4 py-12 space-y-12">
+  <main class="max-w-5xl mx-auto px-4 py-20 space-y-24">
 
     <!-- 新增文章區塊 -->
     <section id="editorSection" class="hidden" data-aos="fade-up">
-      <h2 class="section-title">✍️ 新增文章</h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>新增文章 <span
+          class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">New Article</span></h2>
       <div class="card p-6">
         <form id="articleForm" class="space-y-4">
           <div>
@@ -80,7 +97,8 @@
 
     <!-- 文章列表 -->
     <section data-aos="fade-up">
-      <h2 class="section-title">📚 最新文章</h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>最新文章 <span
+          class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">Articles</span></h2>
       <div id="articleList" class="space-y-6">
         <div class="card p-6 text-center text-gray-500">載入中...</div>
       </div>
@@ -105,9 +123,10 @@
   <script>
     renderHeader("知識分享");
     renderFooter();
-    initPageTransition();
-    AOS.init({ duration: 600, once: true, offset: 80 });
-    window.addEventListener("load", () => document.body.classList.add("loaded"));
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+      AOS.init({ duration: 400, once: true, offset: 50 });
+    });
 
     const articleForm = document.getElementById("articleForm");
     const articleTitleInput = document.getElementById("articleTitle");
@@ -183,14 +202,14 @@
           content: content,
           timestamp: Date.now(),
         })
-        .then(() => {
-          window.showToast("文章發布成功！", true);
-          articleForm.reset();
-          simplemde.value(""); // Clear SimpleMDE editor
-        })
-        .catch((error) => {
-          window.showToast("文章發布失敗: " + error.message, false);
-        });
+          .then(() => {
+            window.showToast("文章發布成功！", true);
+            articleForm.reset();
+            simplemde.value(""); // Clear SimpleMDE editor
+          })
+          .catch((error) => {
+            window.showToast("文章發布失敗: " + error.message, false);
+          });
       } else {
         window.showToast("標題和內容都不能為空！", false);
       }
@@ -210,4 +229,5 @@
     };
   </script>
 </body>
+
 </html>

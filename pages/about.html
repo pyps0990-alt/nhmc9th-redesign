@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -11,24 +12,32 @@
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
+  <!-- 液態流動背景 -->
+  <div class="liquid-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
   <div id="site-header"></div>
 
   <!-- ========== 頁面標題區 ========== -->
   <section class="hero-section py-16 px-4 text-center" data-aos="fade-up">
-    <div class="hero-bg" style="background-image: url(\'../assets/images/IMG_1645.jpg\');""></div>
-    <div class="relative z-10">
-      <h1 class="text-4xl md:text-5xl font-bold text-yellow-300 mb-2" style="font-family:'Oswald',sans-serif;">關於我們</h1>
+    <div class="hero-bg" style="background-image: url('../assets/images/IMG_1645.jpg');"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background z-10"></div>
+    <div class="relative z-20">
+      <h1 class="hero-title text-4xl md:text-5xl font-bold text-yellow-300 mb-2" style="font-family:'Oswald',sans-serif;">關於我們</h1>
       <p class="text-gray-400 text-sm uppercase tracking-widest">About NHMC</p>
     </div>
   </section>
 
   <!-- ========== 主內容 ========== -->
-  <main class="max-w-5xl mx-auto px-4 py-12 space-y-12">
+  <main class="max-w-5xl mx-auto px-4 py-20 space-y-24">
 
     <!-- 社團簡介 -->
     <section data-aos="fade-up">
-      <h2 class="section-title">🎖 社團簡介</h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>社團簡介 <span class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">Introduction</span></h2>
       <div class="card p-6 md:p-8">
         <p class="text-gray-300 leading-relaxed text-base mb-4">
           內湖高中軍武社（NHMC）是一個以軍事文化、射擊技術與紀律精神為核心的社團。
@@ -43,7 +52,7 @@
 
     <!-- 核心價值 -->
     <section data-aos="fade-up">
-      <h2 class="section-title">⭐ 核心價值</h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>核心價值 <span class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">Core Values</span></h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
         <div class="card p-6 text-center " data-aos="fade-up" data-aos-delay="0">
           <div class="text-4xl mb-3">⚔️</div>
@@ -65,7 +74,7 @@
 
     <!-- 幹部名單 -->
     <section data-aos="fade-up">
-      <h2 class="section-title">👥 幹部名單</h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>幹部名單 <span class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">Officers</span></h2>
       <div class="card overflow-hidden">
         <div class="overflow-x-auto">
           <table class="data-table">
@@ -88,7 +97,7 @@
 
     <!-- 社團資訊 -->
     <section data-aos="fade-up">
-      <h2 class="section-title">📋 社團資訊</h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>社團資訊 <span class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">Information</span></h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div class="card p-6 space-y-4">
           <h3 class="text-yellow-300 font-bold text-lg" style="font-family:'Oswald',sans-serif;">📍 集合地點</h3>
@@ -115,7 +124,7 @@
             <div class="flex items-center gap-3">
               <span class="text-yellow-400">💬</span>
               <a href="https://line.me/ti/g/ssQssHJu4D" target="_blank" rel="noopener"
-                 class="text-blue-400 hover:text-blue-300 transition-colors">LINE 社群群組</a>
+                class="text-blue-400 hover:text-blue-300 transition-colors">LINE 社群群組</a>
             </div>
             <div class="flex items-center gap-3">
               <span class="text-yellow-400">📸</span>
@@ -142,8 +151,10 @@
     renderHeader('關於我們');
     renderFooter();
     initPageTransition();
-    AOS.init({ duration: 600, once: true, offset: 80 });
-    window.addEventListener('load', () => document.body.classList.add('loaded'));
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+      AOS.init({ duration: 400, once: true, offset: 50 });
+    });
 
     // 載入幹部名單
     const officerTable = document.getElementById('officerTable');
@@ -168,4 +179,5 @@
     });
   </script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -11,40 +12,48 @@
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
+  <!-- 液態流動背景 -->
+  <div class="liquid-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
   <div id="site-header"></div>
 
   <!-- 頁面標題 -->
   <section class="hero-section py-16 px-4 text-center" data-aos="fade-up">
-    <div class="hero-bg" style="background-image: url(\'<section class="hero-section py-16 px-4 text-center" data-aos="fade-up">
-    <div class="hero-bg" style="background-image: url(\'../assets/images/IMG_1645.jpg\');"></div>
-    <div class="relative z-10">
-      <h1 class="text-4xl md:text-5xl font-bold text-yellow-300 mb-2" style="font-family:\'Oswald\',sans-serif;">教室地圖</h1>
+    <div class="hero-bg" style="background-image: url('../assets/images/IMG_1645.jpg');"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background z-10"></div>
+    <div class="relative z-20">
+      <h1 class="hero-title text-4xl md:text-5xl font-bold text-yellow-300 mb-2" style="font-family:'Oswald',sans-serif;">教室地圖</h1>
       <p class="text-gray-400 text-sm uppercase tracking-widest">Classroom Map</p>
     </div>
   </section>
-  <main class="max-w-5xl mx-auto px-4 py-10 space-y-8">
+  <main class="max-w-5xl mx-auto px-4 py-20 space-y-24">
 
     <!-- 地圖圖片 -->
     <section data-aos="zoom-in">
-      <h2 class="section-title">🗺️ 校園地圖導覽</h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>校園地圖導覽 <span
+          class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">Campus Map</span></h2>
       <div class="card overflow-hidden">
-        <img src="../assets/images/classroom.png"
-             alt="內湖高中教室地圖"
-             class="w-full h-auto"
-             onerror="this.parentElement.innerHTML='<div class=\'p-10 text-center text-gray-500\'>地圖圖片載入失敗</div>'">
+        <img src="../assets/images/classroom.png" alt="內湖高中教室地圖" class="w-full h-auto"
+          onerror="this.parentElement.innerHTML='<div class=\'p-10 text-center text-gray-500\'>地圖圖片載入失敗</div>'">
       </div>
     </section>
 
     <!-- 地點說明 -->
     <section data-aos="fade-up">
-      <h2 class="section-title">📍 重要地點</h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>重要地點 <span
+          class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">Locations</span></h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
         <div class="card p-6 border-l-4 border-primary">
           <div class="flex items-start gap-4">
             <div class="text-3xl shrink-0">🏫</div>
-            <div              <h3 class="text-primary font-bold text-lg mb-1" style="font-family:\'Oswald\',sans-serif;">主要社課教室</h3>
+            <div>
+              <h3 class="text-primary font-bold text-lg mb-1" style="font-family:'Oswald',sans-serif;">主要社課教室</h3>
               <p class="text-text-light text-sm leading-relaxed">
                 <strong class="text-primary">C棟 5樓 205 教室</strong><br>
                 靠近旋轉樓梯口，每週社課在此進行。
@@ -60,7 +69,8 @@
         <div class="card p-6 border-l-4 border-secondary">
           <div class="flex items-start gap-4">
             <div class="text-3xl shrink-0">🔧</div>
-            <div              <h3 class="text-primary font-bold text-lg mb-1" style="font-family:\'Oswald\',sans-serif;">器材室 &amp; 靶場</h3>
+            <div>
+              <h3 class="text-primary font-bold text-lg mb-1" style="font-family:'Oswald',sans-serif;">器材室 &amp; 靶場</h3>
               <p class="text-text-light text-sm leading-relaxed">
                 <strong class="text-primary">A棟地下室</strong><br>
                 由A棟樓梯下去，請幹部及社員注意安全與器材管理。
@@ -77,7 +87,8 @@
           <div class="flex items-start gap-4">
             <div class="text-3xl shrink-0">🚪</div>
             <div>
-              <h3 class="text-primary font-bold text-lg mb-1" style="font-family:\'Oswald\',sans-serif;">集合地點</h3>             <p class="text-text-light text-sm leading-relaxed">
+              <h3 class="text-primary font-bold text-lg mb-1" style="font-family:'Oswald',sans-serif;">集合地點</h3>
+              <p class="text-text-light text-sm leading-relaxed">
                 社課開始前請於 <strong class="text-primary">C棟 5樓走廊</strong> 集合，
                 等待幹部點名後統一進入教室。
               </p>
@@ -88,7 +99,9 @@
         <div class="card p-6 border-l-4 border-secondary">
           <div class="flex items-start gap-4">
             <div class="text-3xl shrink-0">⚠️</div>
-            <div>              <h3 class="text-primary font-bold text-lg mb-1" style="font-family:\'Oswald\',sans-serif;">注意事項</h3>              <ul class="text-text-light text-sm space-y-1 leading-relaxed">
+            <div>
+              <h3 class="text-primary font-bold text-lg mb-1" style="font-family:'Oswald',sans-serif;">注意事項</h3>
+              <ul class="text-text-light text-sm space-y-1 leading-relaxed">
                 <li>• 器材室需由幹部帶領進入</li>
                 <li>• 槍枝借用需填寫借用紀錄</li>
                 <li>• 離開前確認器材歸位</li>
@@ -103,7 +116,8 @@
 
     <!-- 樓層示意 -->
     <section data-aos="fade-up">
-      <h2 class="section-title">🏢 樓層分布</h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>樓層分布 <span
+          class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">Floors</span></h2>
       <div class="card overflow-hidden">
         <div class="overflow-x-auto">
           <table class="data-table">
@@ -150,8 +164,11 @@
     renderHeader('教室地圖');
     renderFooter();
     initPageTransition();
-    AOS.init({ duration: 600, once: true, offset: 80 });
-    window.addEventListener('load', () => document.body.classList.add('loaded'));
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+      AOS.init({ duration: 400, once: true, offset: 50 });
+    });
   </script>
 </body>
+
 </html>

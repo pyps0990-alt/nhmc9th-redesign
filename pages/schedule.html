@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -28,32 +29,67 @@
       font-family: var(--font-body);
       font-size: 0.875rem;
     }
-    .fc .fc-toolbar-title { font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-primary); }
-    .fc .fc-col-header-cell { background-color: var(--color-background); }
-    .fc .fc-col-header-cell-cushion { color: var(--color-text-muted); font-weight: 600; }
-    .fc .fc-daygrid-day-number { color: var(--color-text-light); }
-    .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number { color: var(--color-primary); font-weight: 700; }
-    .fc .fc-event { border-radius: 4px; font-size: 0.75rem; }
-    .fc .fc-button { font-family: var(--font-heading); letter-spacing: 0.025em; }
+
+    .fc .fc-toolbar-title {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      color: var(--color-primary);
+    }
+
+    .fc .fc-col-header-cell {
+      background-color: var(--color-background);
+    }
+
+    .fc .fc-col-header-cell-cushion {
+      color: var(--color-text-muted);
+      font-weight: 600;
+    }
+
+    .fc .fc-daygrid-day-number {
+      color: var(--color-text-light);
+    }
+
+    .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    .fc .fc-event {
+      border-radius: 4px;
+      font-size: 0.75rem;
+    }
+
+    .fc .fc-button {
+      font-family: var(--font-heading);
+      letter-spacing: 0.025em;
+    }
   </style>
 </head>
+
 <body>
+  <!-- 液態流動背景 -->
+  <div class="liquid-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
   <div id="site-header"></div>
 
   <!-- ========== 頁面標題區 ========== -->
   <section class="hero-section py-16 px-4 text-center" data-aos="fade-up">
-    <div class="hero-bg" style="background-image: url(\'../assets/images/IMG_1645.jpg\');"></div>
-    <div class="relative z-10">
-      <h1 class="text-4xl md:text-5xl font-bold text-yellow-300 mb-2" style="font-family:\'Oswald\',sans-serif;">活動排程</h1>
+    <div class="hero-bg" style="background-image: url('../assets/images/IMG_1645.jpg');"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background z-10"></div>
+    <div class="relative z-20">
+      <h1 class="hero-title text-4xl md:text-5xl font-bold text-yellow-300 mb-2" style="font-family:'Oswald',sans-serif;">活動排程</h1>
       <p class="text-gray-400 text-sm uppercase tracking-widest">NHMC Schedule</p>
     </div>
   </section>
 
   <!-- ========== 主內容 ========== -->
-  <main class="max-w-5xl mx-auto px-4 py-12 space-y-12">
+  <main class="max-w-5xl mx-auto px-4 py-20 space-y-24">
 
     <section data-aos="fade-up">
-      <h2 class="section-title">📅 社團活動日曆</h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>社團活動日曆 <span class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">Calendar</span></h2>
       <div class="card p-4 md:p-6">
         <div id="calendar"></div>
       </div>
@@ -78,10 +114,12 @@
     renderHeader("活動排程");
     renderFooter();
     initPageTransition();
-    AOS.init({ duration: 600, once: true, offset: 80 });
-    window.addEventListener("load", () => document.body.classList.add("loaded"));
+    window.addEventListener("load", () => {
+      document.body.classList.add("loaded");
+      AOS.init({ duration: 400, once: true, offset: 50 });
+    });
 
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
       const calendarEl = document.getElementById("calendar");
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: "dayGridMonth",
@@ -98,11 +136,11 @@
           day: "日"
         },
         events: [], // 將從 Firebase 載入事件
-        eventClick: function(info) {
+        eventClick: function (info) {
           // 點擊事件時的處理
           window.showToast("活動: " + info.event.title + "\n時間: " + info.event.start.toLocaleString(), true);
         },
-        eventDidMount: function(info) {
+        eventDidMount: function (info) {
           // 自定義事件渲染，例如添加 Tailwind CSS 類別
           info.el.classList.add("rounded-md", "px-2", "py-1", "text-xs", "font-medium", "shadow-sm");
           if (info.event.extendedProps.type === "社課") {
@@ -160,4 +198,5 @@
     });
   </script>
 </body>
+
 </html>

@@ -9,92 +9,113 @@ const navLinks = [
   { name: '槍枝借用', href: 'pages/gun-loan.html', icon: '🔫' },
 ];
 
+function getBasePath() {
+  const path = window.location.pathname;
+  // 檢查是否處於 pages 子目錄中
+  if (path.includes('/pages/')) {
+    return '../';
+  }
+  // 否則預設為當前目錄，確保在 GitHub Pages 子路徑下也能正確解析
+  return './';
+}
+
 function renderHeader(currentPageTitle = '') {
   const header = document.getElementById('site-header');
   if (!header) return;
 
   const currentPath = window.location.pathname;
-  const basePath = '/nhmc9th-redesign/'; // GitHub Pages base path
+  const rootPath = getBasePath();
 
-  const navHTML = navLinks.map(link => {
-    const fullHref = basePath + link.href;
-    const isActive = currentPath === fullHref || (currentPath.startsWith(basePath + 'pages/') && fullHref.includes(currentPath.split('/').pop()));
+  const desktopDropdownItems = navLinks.map(link => {
+    const isCurrentPageRoot = !currentPath.includes('/pages/');
+    let fullHref = isCurrentPageRoot ? link.href : (link.href.startsWith('pages/') ? link.href.replace('pages/', '') : '../' + link.href);
+    const isActive = link.name === currentPageTitle;
+
     return `
-      <a href="${fullHref}"
-         class="nav-link flex items-center gap-2 px-4 py-2.5 text-sm text-gray-200 hover:bg-gray-700 hover:text-yellow-300 transition-colors rounded-md
-         ${isActive ? 'bg-gray-700 text-yellow-300 font-semibold' : ''}"
-      >
-        <span>${link.icon}</span>
-        <span>${link.name}</span>
+      <a href="${fullHref}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all duration-200 ${isActive ? 'bg-white/10 text-yellow-400 font-medium' : 'text-gray-300 hover:bg-white/5 hover:text-white'}">
+        <span class="text-lg opacity-80">${link.icon}</span>
+        <span class="tracking-wide">${link.name}</span>
       </a>
     `;
   }).join('');
 
   header.innerHTML = `
     <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="${basePath}index.html" class="flex items-center gap-2 text-2xl font-bold text-yellow-400 hover:text-yellow-300 transition-colors duration-200" style="font-family: 'Oswald', sans-serif;">
-        <img src="${basePath}assets/images/NHMC.png" alt="NHMC Logo" class="w-10 h-10 rounded-full border-2 border-yellow-500">
+      <a href="${rootPath}index.html" class="flex items-center gap-3 text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600 tracking-wider" style="font-family: 'Oswald', sans-serif;">
+        <img src="${rootPath}assets/images/NHMC.png" alt="NHMC Logo" class="w-9 h-9 rounded-full border border-yellow-500/50 shadow-[0_0_10px_rgba(250,204,21,0.2)]">
         NHMC
       </a>
 
       <nav class="hidden md:flex items-center space-x-1">
-        ${navHTML}
-        <a href="${basePath}login.html" class="btn btn-primary ml-4 text-xs px-3 py-1.5">
-          🔑 幹部登入
+        <!-- 電腦版下拉選單 -->
+        <div class="relative group">
+          <button class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors rounded-full hover:bg-white/5">
+            <span>社團功能選單</span>
+            <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          
+          <!-- 下拉內容 (玻璃透視感) -->
+          <div class="absolute right-0 mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top translate-y-4 scale-95 group-hover:translate-y-0 group-hover:scale-100 z-50">
+            <div class="bg-[#09090b]/50 backdrop-blur-3xl border border-white/10 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.7)] p-2 flex flex-col gap-1">
+              ${desktopDropdownItems}
+            </div>
+          </div>
+        </div>
+
+        <!-- 專業深色玻璃感：幹部登入按鈕 -->
+        <a href="${rootPath}login.html" class="ml-4 flex items-center gap-2 px-4 py-2.5 rounded-full border border-white/10 bg-white/5 text-xs font-medium text-gray-300 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all shadow-lg">
+          <svg class="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          幹部登入
         </a>
       </nav>
 
-      <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+      <!-- 手機版漢堡選單按鈕 -->
+      <button id="mobile-menu-button" class="md:hidden p-2 rounded-full text-gray-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-all focus:outline-none">
         <span class="sr-only">開啟主選單</span>
-        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
     </div>
 
-    <div id="mobile-menu" class="md:hidden hidden bg-gray-900 bg-opacity-95 backdrop-filter backdrop-blur-lg shadow-lg py-2">
-      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+    <!-- 手機版選單面版 (極致玻璃感) -->
+    <div id="mobile-menu" class="md:hidden hidden bg-[#09090b]/40 backdrop-blur-3xl border-b border-white/5 shadow-2xl overflow-hidden transition-all duration-300">
+      <div class="px-4 py-4 flex flex-col gap-1">
         ${navLinks.map(link => {
-          const fullHref = basePath + link.href;
-          const isActive = currentPath === fullHref || (currentPath.startsWith(basePath + 'pages/') && fullHref.includes(currentPath.split('/').pop()));
-          return `
-            <a href="${fullHref}"
-               class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700
-               ${isActive ? 'bg-gray-800 text-yellow-300' : ''}"
-            >
-              ${link.icon} ${link.name}
+    const isCurrentPageRoot = !currentPath.includes('/pages/');
+    let fullHref = isCurrentPageRoot ? link.href : (link.href.startsWith('pages/') ? link.href.replace('pages/', '') : '../' + link.href);
+    const isActive = link.name === currentPageTitle;
+    return `
+            <a href="${fullHref}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all ${isActive ? 'bg-white/10 text-yellow-400 font-medium' : 'text-gray-300 hover:bg-white/5 hover:text-white'}">
+              <span class="text-lg opacity-80">${link.icon}</span>
+              <span class="tracking-wide">${link.name}</span>
             </a>
           `;
-        }).join('')}
-        <a href="${basePath}login.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">
-          🔑 幹部登入
+  }).join('')}
+        <div class="h-px bg-white/10 my-2"></div>
+        <a href="${rootPath}login.html" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white transition-all mt-1">
+          <svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          幹部登入
         </a>
       </div>
     </div>
   `;
 
-  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  // 行動版選單切換邏輯
+  const mobileBtn = document.getElementById('mobile-menu-button');
   const mobileMenu = document.getElementById('mobile-menu');
-
-  if (mobileMenuButton) {
-    mobileMenuButton.addEventListener('click', () => {
+  if (mobileBtn && mobileMenu) {
+    mobileBtn.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
     });
   }
-
-  // Close mobile menu when clicking outside
-  document.addEventListener('click', (event) => {
-    if (mobileMenu && mobileMenuButton && !mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
-      mobileMenu.classList.add('hidden');
-    }
-  });
 }
 
 function renderFooter() {
   const footer = document.getElementById('site-footer');
   if (!footer) return;
 
-  const basePath = '/nhmc9th-redesign/'; // GitHub Pages base path
+  const rootPath = getBasePath();
 
   footer.innerHTML = `
     <div class="container mx-auto px-4 py-8 text-center text-gray-500 text-sm">
@@ -109,26 +130,15 @@ function renderFooter() {
         <a href="https://www.instagram.com/nhmc.9th/" target="_blank" class="text-gray-400 hover:text-yellow-400 transition-colors duration-200">
           <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path fill-rule="evenodd" d="M12 0C8.74 0 8.333.01 7.05 0.07c-1.26.06-2.02.24-2.58.47-.56.23-1.02.55-1.48.99-.46.44-.78.9-.99 1.48-.23.56-.41 1.32-.47 2.58-.06 1.28-.07 1.69-.07 5.05s.01 3.77.07 5.05c.06 1.26.24 2.02.47 2.58.23.56.55 1.02.99 1.48.44.46.9 0.78 1.48.99.56.23 1.32.41 2.58.47 1.28.06 1.69.07 5.05.07s3.77-.01 5.05-.07c1.26-.06 2.02-.24 2.58-.47.56-.23 1.02-.55 1.48-.99.46-.44.78-.9.99-1.48.23-.56.41-1.32.47-2.58.06-1.28.07-1.69.07-5.05s-.01-3.77-.07-5.05c-.06-1.26-.24-2.02-.47-2.58-.23-.56-.55-1.02-.99-1.48-.44-.46-.9-.78-1.48-.99-.56-.23-1.32-.41-2.58-.47C15.77 0.01 15.367 0 12 0zm0 2.16c3.2 0 3.585.016 4.85.07c1.17.05 1.7.24 2.02.37.34.14.67.3.92.55.25.25.41.58.55.92.13.32.32.85.37 2.02.05 1.26.07 1.64.07 4.85s-.02 3.585-.07 4.85c-.05 1.17-.24 1.7-.37 2.02-.14.34-.3.67-.55.92-.25.25-.58.41-.92.55-.32.13-.85.32-2.02.37-1.26.05-1.64.07-4.85.07s-3.585-.02-4.85-.07c-1.17-.05-1.7-.24-2.02-.37-.34-.14-.67-.3-.92-.55-.25-.25-.41-.58-.55-.92-.13-.32-.32-.85-.37-2.02-.05-1.26-.07-1.64-.07-4.85s.02-3.585.07-4.85c.05-1.17.24-1.7.37-2.02.14-.34.3-.67.55-.92.25-.25.58-.41.92-.55.32-.13.85-.32 2.02-.37C8.415 2.176 8.79 2.16 12 2.16zM12 6.865c-2.89 0-5.235 2.345-5.235 5.235s2.345 5.235 5.235 5.235 5.235-2.345 5.235-5.235-2.345-5.235-5.235-5.235zM12 15.05c-1.795 0-3.245-1.45-3.245-3.245S10.205 8.56 12 8.56s3.245 1.45 3.245 3.245-1.45 3.245-3.245 3.245zm5.338-8.562c0 .876-.712 1.588-1.588 1.588S13.99 7.374 13.99 6.498s.712-1.588 1.588-1.588 1.588.712 1.588 1.588z" clip-rule="evenodd"/>
-          </svg>
         </a>
       </div>
     </div>
   `;
 }
 
-// 頁面過渡動畫
+// 移除過度動畫，保持簡潔
 function initPageTransition() {
-  const overlay = document.createElement('div');
-  overlay.classList.add('page-transition-overlay');
-  document.body.appendChild(overlay);
-
-  window.addEventListener('beforeunload', () => {
-    overlay.classList.remove('hidden');
-  });
-
-  window.addEventListener('load', () => {
-    overlay.classList.add('hidden');
-  });
+  // 已移除多餘動畫
 }
 
 // PWA 安裝提示
@@ -142,8 +152,9 @@ window.addEventListener('beforeinstallprompt', (e) => {
 function showInstallPromotion() {
   const banner = document.createElement('div');
   banner.id = 'pwa-install-banner';
+  const rootPath = getBasePath();
   banner.innerHTML = `
-    <img src="/nhmc9th-redesign/assets/images/NHMC.png" alt="NHMC Logo" class="w-8 h-8">
+    <img src="${rootPath}assets/images/NHMC.png" alt="NHMC Logo" class="w-8 h-8">
     <div>
       <p class="font-bold">安裝內湖高中軍武社 App</p>
       <p class="text-gray-400 text-xs">新增至主畫面，體驗更快速、沉浸式的瀏覽。</p>
