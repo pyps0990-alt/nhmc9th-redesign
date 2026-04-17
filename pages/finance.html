@@ -149,6 +149,7 @@
     const balanceAmountEl = document.getElementById('balanceAmount');
     const balanceCard = document.getElementById('balanceCard');
 
+    // 讀取 finance/record（AppScript 寫入格式：{income:[{item,amount}], expense:[...]}）
     db.ref('finance/record').on('value', snapshot => {
       const data = snapshot.val() || {};
       incomeTable.innerHTML = '';
@@ -156,8 +157,11 @@
       let totalIncome = 0;
       let totalExpense = 0;
 
-      if (data.income && Object.keys(data.income).length > 0) {
-        Object.values(data.income).forEach(item => {
+      const incomes  = Array.isArray(data.income)  ? data.income  : Object.values(data.income  || {});
+      const expenses = Array.isArray(data.expense) ? data.expense : Object.values(data.expense || {});
+
+      if (incomes.length > 0) {
+        incomes.forEach(item => {
           const tr = document.createElement('tr');
           tr.innerHTML = `
             <td class="font-medium">${item.item}</td>
@@ -170,8 +174,8 @@
         incomeTable.innerHTML = '<tr><td colspan="2" class="text-center text-gray-500 py-4">尚無收入紀錄</td></tr>';
       }
 
-      if (data.expense && Object.keys(data.expense).length > 0) {
-        Object.values(data.expense).forEach(item => {
+      if (expenses.length > 0) {
+        expenses.forEach(item => {
           const tr = document.createElement('tr');
           tr.innerHTML = `
             <td class="font-medium">${item.item}</td>

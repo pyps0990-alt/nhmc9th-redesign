@@ -530,7 +530,8 @@
       const amount = parseFloat(document.getElementById(`${type}Amount`).value);
       if (!item || !amount) { window.showToast('請輸入項目名稱和金額', false); return; }
 
-      db.ref('finance').push({ type, item, amount, timestamp: new Date().toISOString() })
+      // 寫到 finance/record/income 或 finance/record/expense（與 AppScript 格式一致）
+      db.ref(`finance/record/${type}`).push({ item, amount, timestamp: new Date().toISOString() })
         .then(() => {
           window.showToast('新增成功！', true);
           document.getElementById(`${type}Item`).value = '';
@@ -538,9 +539,9 @@
         }).catch(err => window.showToast('新增失敗：' + err.message, false));
     }
 
-    function deleteFinance(id) {
+    function deleteFinance(type, id) {
       if (window.confirm('確定要刪除此筆紀錄嗎？')) {
-        db.ref('finance/' + id).remove()
+        db.ref(`finance/record/${type}/${id}`).remove()
           .then(() => window.showToast('刪除成功！', true))
           .catch(err => window.showToast('刪除失敗：' + err.message, false));
       }
