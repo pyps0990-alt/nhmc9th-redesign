@@ -89,7 +89,7 @@
   <main class="max-w-5xl mx-auto px-4 py-20 space-y-24">
 
     <section data-aos="fade-up">
-      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>社團活動日曆 <span class="text-sm text-gray-500 font-normal ml-2 tracking-widest uppercase">Calendar</span></h2>
+      <h2 class="section-title"><span class="w-1.5 h-8 bg-primary block rounded-full"></span>社團活動日曆 <span class="text-sm text-gray-400 font-normal ml-2 tracking-widest uppercase">Calendar</span></h2>
       <div class="card p-4 md:p-6">
         <div id="calendar"></div>
       </div>
@@ -175,6 +175,8 @@
       });
 
       calendar.render();
+      document.querySelectorAll('.fc-icon-chevron-left').forEach(el => el.setAttribute('aria-label', '上個月'));
+      document.querySelectorAll('.fc-icon-chevron-right').forEach(el => el.setAttribute('aria-label', '下個月'));
 
       // 處理從首頁公告點擊過來的事件
       const urlParams = new URLSearchParams(window.location.search);
